@@ -17,7 +17,7 @@ const router = createRouter({
     {
       path: '/trillio',
       name: 'trillio',
-      component: () => import('../views/trillioPage.vue')
+      component: () => import('@/views/TrillioPage.vue')
     },
     {
       path: '/quiz',
