@@ -16,12 +16,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import { faBookmark,faComment  } from '@fortawesome/free-regular-svg-icons'
-import { faComment as fasComment,faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faComment as fasComment, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
+import {registerSW} from "virtual:pwa-register"
 
 
 
 /* add icons to the library */
 library.add(faBookmark,faComment,fasComment,faArrowLeft)
+
+registerSW({immediate:true})
 
 const app = createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)

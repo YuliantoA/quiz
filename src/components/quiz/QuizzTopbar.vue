@@ -14,9 +14,9 @@
     </div>
     <div
       v-if="activeQuestion > -1 && themeQuestion && totalQuestion"
-      class="lg:text-xl text-sm flex flex-col justify-center items-center w-5/12"
+      class="lg:text-xl text-sm flex flex-col justify-end items-end w-5/12"
     >
-      <div class="lg:text-xl text-sm text-center">{{ themeQuestion }}</div>
+      <div class="lg:text-xl text-sm text-end">{{ themeQuestion }}</div>
       <div>{{ activeQuestion + 1 }} of {{ totalQuestion }}</div>
     </div>
   </div>
