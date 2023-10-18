@@ -1,9 +1,9 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <div>
+  <div class="w-screen h-screen">
     <RouterView />
   </div>
 </template>

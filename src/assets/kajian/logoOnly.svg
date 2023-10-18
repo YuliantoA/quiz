@@ -1,0 +1,16 @@
+<svg width="219.94095966463598" height="148.5" viewBox="0 0 350 236.3134182884853" class="css-1j8o68f">
+	<defs id="SvgjsDefs2757">
+		<linearGradient id="SvgjsLinearGradient2762">
+			<stop id="SvgjsStop2763" stop-color="#006838" offset="0">
+			</stop>
+			<stop id="SvgjsStop2764" stop-color="#96cf24" offset="1">
+			</stop>
+		</linearGradient>
+	</defs>
+	<g id="SvgjsG2758" featurekey="e7LhAk-0" transform="matrix(1.494624709516678,0,0,1.494624709516678,100.26951285139512,-3.736561773791695)" fill="url(#SvgjsLinearGradient2762)">
+		<path xmlns="http://www.w3.org/2000/svg" fill="url(#SvgjsLinearGradient2762)" d="M62.117,83.835c-20.894,0-37.837-16.926-37.837-37.808c0-20.887,16.943-37.831,37.837-37.831  c6.466,0,12.562,1.637,17.883,4.503C71.914,6.332,61.75,2.5,50.671,2.5C24.437,2.5,3.165,23.777,3.165,50.006  C3.165,76.24,24.437,97.5,50.671,97.5c22.421,0,41.179-15.57,46.163-36.475C91.021,74.45,77.661,83.835,62.117,83.835z">
+		</path>
+		<polygon xmlns="http://www.w3.org/2000/svg" fill="url(#SvgjsLinearGradient2762)" points="57.514,65.743 60.335,48.643 46.762,38.67 64.032,36.877 67.884,19.019 75.387,35.735   92.885,34.588 80.501,47.104 86.245,62.431 71.022,54.619 ">
+		</polygon>
+	</g>
+</svg>

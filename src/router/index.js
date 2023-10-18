@@ -11,7 +11,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      redirect: { path: "/quiz/home" },
+      redirect: { path: "/kajian" },
       component: HomeView
     },
     {
@@ -50,6 +50,18 @@ const router = createRouter({
           path: 'score',
           name: 'Score',
           component:QuizzScore
+        }
+      ]
+    },
+    {
+      path: '/kajian',
+      name: 'kajian',
+      component: () => import('@/views/KajianView.vue'),
+      children: [
+        {
+          path: 'main',
+          name: 'kajianMain',
+          component:()=> import('@/components/kajian/KajianMain.vue')
         }
       ]
     }
