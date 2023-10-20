@@ -8,7 +8,7 @@
           >
             <font-awesome-icon :icon="['fas', 'user']" />
           </div>
-          <div>{{ userStore.email }}</div>
+          <div>{{ creator.name }}</div>
         </div>
         <div class="h-4/6 w-full mb-auto">
           <img src="@/assets/kajian/poster1.jpeg" class="object-cover h-full w-full" />
@@ -21,7 +21,7 @@
                   <font-awesome-icon :icon="['fas', 'hippo']" />
                 </IconLike>
               </template>
-              <span class="ml-1 text-kajian-darkGray">998</span>
+              <span class="ml-1 text-kajian-darkGray">{{ props.postDetail.like.count }}</span>
             </div>
             <div class="w-6/12 flex justify-end items-center">
               <div class="mr-2 cursor-pointer hover:text-kajian-darkBlue text-kajian-darkGray">
@@ -35,7 +35,24 @@
           </div>
           <hr class="border-kajian-gray border w-full" />
           <div class="h-28 flex w-full flex-wrap text-sm mt-2">
-            <template v-for="(detail, key, index) in detailKajian" :key="index">
+            <div class="w-2/4 font-light">
+              <span>Judul : </span>
+              <span class="uppercase font-bold">{{ props.postDetail.judul }}</span>
+            </div>
+            <div class="w-2/4 font-light">
+              <span>Lokasi : </span>
+              <span class="capitalize">{{ props.postDetail.tempat.lokasi }}</span>
+            </div>
+            <hr class="w-full border-none h-0" />
+            <div class="w-2/4 font-light">
+              <span>Ustad : </span>
+              <span class="capitalize">{{ ustad.name }}</span>
+            </div>
+            <div class="w-2/4 font-light">
+              <span>Jadwal : </span>
+              <span class="capitalize text-xs">{{ props.postDetail.waktu.tanggal }}</span>
+            </div>
+            <!-- <template v-for="(detail, key, index) in detailKajian" :key="index">
               <div class="w-2/4 font-light">
                 <span>{{ key + ' : ' }}</span>
                 <span :class="[key == 'judul' ? 'uppercase font-bold' : 'capitalize']">{{
@@ -43,7 +60,7 @@
                 }}</span>
               </div>
               <hr class="w-full border-none h-0" v-if="index % 2 == 1" />
-            </template>
+            </template> -->
             <div
               class="flex items-center justify-center w-full hover:text-kajian-darkBlue cursor-pointer capita"
             >
@@ -73,9 +90,28 @@
 
 <script setup>
 import IconLike from '@/components/kajian/iconPersonal/IconLike.vue'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { kajianStore } from '../../../stores/counter'
+import { getUser, getUstad } from '@/firebase/kajianDataService.js'
+const props = defineProps({
+  postDetail: {
+    required: true,
+    type: Object
+  }
+})
+const creator = ref({})
+const ustad = ref({})
+onMounted(() => {
+  getCreatorUser()
+  getPostUstad()
+})
 
+async function getPostUstad() {
+  ustad.value = await getUstad(Object.keys(props.postDetail.ustad)[0])
+}
+async function getCreatorUser() {
+  creator.value = await getUser(Object.keys(props.postDetail.creator)[0])
+}
 const userStore = kajianStore()
 
 let detailKajian = reactive({

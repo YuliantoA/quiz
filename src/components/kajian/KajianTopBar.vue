@@ -47,7 +47,7 @@ import logoIcon from './logo/LogoIcon.vue'
 import logoTextIcon from './logo/LogoTextIcon.vue'
 import IconBorder from './iconPersonal/IconBorder.vue'
 import router from '../../router'
-import firebase from '@/firebase/firebase.js'
+import { firebase } from '@/firebase/firebase.js'
 import { kajianStore } from '../../stores/counter'
 
 const userStore = kajianStore()

@@ -35,7 +35,7 @@
 <script setup>
 import KajianRegisFrom from '@/components/kajian/landing/KajianRegisForm.vue'
 import { normalizeMessageFirebase } from '@/helpers/StringHelper'
-import firebase from '@/firebase/firebase.js'
+import { firebase } from '@/firebase/firebase.js'
 import { ref } from 'vue'
 import router from '../../../router'
 import { toastStore } from '@/stores/counter'

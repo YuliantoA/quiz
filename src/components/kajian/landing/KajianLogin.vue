@@ -34,7 +34,7 @@
 
 <script setup>
 import KajianLoginForm from '@/components/kajian/landing/KajianLoginForm.vue'
-import firebase from '@/firebase/firebase.js'
+import { firebase } from '@/firebase/firebase.js'
 import router from '../../../router'
 import { ref } from 'vue'
 import { toastStore, kajianStore } from '@/stores/counter'

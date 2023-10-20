@@ -17,7 +17,7 @@ import { RouterView } from 'vue-router'
 import ToastMessage from '@/components/util/ToastMessage.vue'
 import { toastStore, kajianStore } from '@/stores/counter'
 import { onMounted, ref, watch } from 'vue'
-import firebase from '@/firebase/firebase.js'
+import { firebase } from '@/firebase/firebase.js'
 import router from './router'
 
 const store = toastStore()
