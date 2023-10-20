@@ -5,8 +5,9 @@ const defaultErrorMessages = {
     moreThanStartDate: 'Wajib diisi setelah tanggal mulai',
     letterAndNumberOnly: 'only letter and number',
     numberOnly: 'only number',
-    maxValue:'value more than limit'
-  
+  maxValue: 'value more than limit',
+    email:'not valid',
+    sameAsPassword:'not same'
 };
 
 export function getErrorMessages(vuelidateState, KeyInput = "kolom", customErrorMessages = {}) {

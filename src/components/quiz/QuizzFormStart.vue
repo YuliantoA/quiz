@@ -84,11 +84,11 @@ const rules = {
   },
   theme: { required }
 }
+const v$ = useVuelidate(rules, state)
+
 defineExpose({
   validateAndGetData
 })
-const v$ = useVuelidate(rules, state)
-
 async function validateAndGetData() {
   // const isFormCorrect = await unref(v$).$validate()
   unref(v$).$validate()

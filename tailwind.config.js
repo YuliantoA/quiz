@@ -18,7 +18,9 @@ module.exports = {
       'kajian-darkGray':'#b4b4b4',
       'kajian-lightBlue':'#4DB2FE',
       'kajian-blue':'#1C8AF8',
-      'kajian-white':'#FEFEFE',
+        'kajian-white': '#FEFEFE',
+      'kajian-red':'#Cc0202',
+      'kajian-red-transparent':'#FEBBBB'
     },
     },
   },

@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-
 const props = defineProps({
   color: { type: String, default: 'green-400' }
 })
@@ -29,8 +27,6 @@ const defaultColor = 'quiz-darkBlue'
 .lds-roller {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
 }
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
