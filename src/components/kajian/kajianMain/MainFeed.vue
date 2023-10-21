@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-kajian-white h-full w-full border border-kajian-darkGray rounded-xl mb-5">
+  <div class="bg-kajian-white h-fit w-full border border-kajian-darkGray rounded-xl mb-5">
     <div class="flex justify-center w-full h-full">
       <div class="flex flex-col items-center justify-between">
         <div class="h-16 py-5 flex justify-start items-center w-full">
@@ -10,10 +10,10 @@
           </div>
           <div>{{ creator.name }}</div>
         </div>
-        <div class="h-4/6 w-full mb-auto">
-          <img src="@/assets/kajian/poster1.jpeg" class="object-cover h-full w-full" />
+        <div class="h-[40rem] w-full mb-auto bg-black">
+          <img :src="mainImage" class="object-contain h-full w-full" />
         </div>
-        <div class="h-2/6 flex flex-col w-full items-center px-5">
+        <div class="h-fit flex flex-col w-full items-center px-5 mt-2">
           <div class="h-10 text-xs flex justify-between items-center w-full mb-2">
             <div class="w-6/12 flex items-center">
               <template v-for="index in 3" :key="index">
@@ -34,37 +34,44 @@
             </div>
           </div>
           <hr class="border-kajian-gray border w-full" />
-          <div class="h-28 flex w-full flex-wrap text-sm mt-2">
-            <div class="w-2/4 font-light">
-              <span>Judul : </span>
-              <span class="uppercase font-bold">{{ props.postDetail.judul }}</span>
-            </div>
-            <div class="w-2/4 font-light">
-              <span>Lokasi : </span>
-              <span class="capitalize">{{ props.postDetail.tempat.lokasi }}</span>
-            </div>
-            <hr class="w-full border-none h-0" />
-            <div class="w-2/4 font-light">
-              <span>Ustad : </span>
-              <span class="capitalize">{{ ustad.name }}</span>
-            </div>
-            <div class="w-2/4 font-light">
-              <span>Jadwal : </span>
-              <span class="capitalize text-xs">{{ props.postDetail.waktu.tanggal }}</span>
-            </div>
-            <!-- <template v-for="(detail, key, index) in detailKajian" :key="index">
+          <div class="w-full text-sm my-2 h-fit">
+            <div class="flex flex-wrap h-[5rem]">
               <div class="w-2/4 font-light">
-                <span>{{ key + ' : ' }}</span>
-                <span :class="[key == 'judul' ? 'uppercase font-bold' : 'capitalize']">{{
-                  detail
-                }}</span>
+                <span>Judul : </span>
+                <span class="uppercase font-bold">{{ props.postDetail.judul }}</span>
               </div>
-              <hr class="w-full border-none h-0" v-if="index % 2 == 1" />
-            </template> -->
+              <div class="w-2/4 font-light">
+                <span>Lokasi : </span>
+                <span class="capitalize">{{ props.postDetail.tempat.lokasi }}</span>
+              </div>
+              <hr class="w-full border-none h-0" />
+              <div class="w-2/4 font-light">
+                <span>Ustad : </span>
+                <span class="capitalize">{{ ustad.name }}</span>
+              </div>
+              <div class="w-2/4 font-light">
+                <span>Jadwal : </span>
+                <span class="capitalize text-xs">{{ props.postDetail.waktu.tanggal }}</span>
+              </div>
+            </div>
             <div
+              v-if="!isDetailOpen"
+              @click="isDetailOpen = !isDetailOpen"
               class="flex items-center justify-center w-full hover:text-kajian-darkBlue cursor-pointer capita"
             >
               see more >>
+            </div>
+            <div v-else class="w-full h-fit">
+              <hr class="border-t border-kajian-gray" />
+              <div class="my-5 h-fit">
+                {{ props.postDetail.detail }}
+              </div>
+              <div
+                @click="isDetailOpen = !isDetailOpen"
+                class="flex items-center justify-center w-full hover:text-kajian-darkBlue cursor-pointer capita"
+              >
+                see less >>
+              </div>
             </div>
           </div>
           <hr class="border-kajian-gray border w-full" />
@@ -92,7 +99,7 @@
 import IconLike from '@/components/kajian/iconPersonal/IconLike.vue'
 import { onMounted, reactive, ref } from 'vue'
 import { kajianStore } from '../../../stores/counter'
-import { getUser, getUstad } from '@/firebase/kajianDataService.js'
+import { getUser, getUstad, getImage } from '@/firebase/kajianDataService.js'
 const props = defineProps({
   postDetail: {
     required: true,
@@ -101,9 +108,13 @@ const props = defineProps({
 })
 const creator = ref({})
 const ustad = ref({})
+const isDetailOpen = ref(false)
+const mainImage = ref('')
+
 onMounted(() => {
   getCreatorUser()
   getPostUstad()
+  getImagePost()
 })
 
 async function getPostUstad() {
@@ -112,6 +123,10 @@ async function getPostUstad() {
 async function getCreatorUser() {
   creator.value = await getUser(Object.keys(props.postDetail.creator)[0])
 }
+async function getImagePost() {
+  mainImage.value = await getImage(props.postDetail.poster)
+}
+
 const userStore = kajianStore()
 
 let detailKajian = reactive({

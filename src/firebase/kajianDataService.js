@@ -1,5 +1,4 @@
-import {database} from "@/firebase/firebase";
-
+import {database, storage} from "@/firebase/firebase";
 
 
 // var starCountRef = firebase.database().ref('posts/' + postId + '/starCount');
@@ -41,7 +40,18 @@ async function getUstad(ustadId) {
   return result.val()
 }
 
-export {getPostAll,getPostAllTest,getUser,getUstad}
+async function getImage(imageId) {
+  const result = await storage
+  .ref('kajian/post/'+imageId)
+  .getDownloadURL()
+  .catch((error) => {
+    console.log(error)
+  })
+  return result
+}
+
+
+export {getPostAll,getPostAllTest,getUser,getUstad,getImage}
 // class quizDataService {
 //   getAll() {
 //     return db;

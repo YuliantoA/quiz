@@ -27,6 +27,7 @@ const isLoading = ref(true)
 onMounted(() => {
   checkLoginStatus()
 })
+
 watch(
   () => store.toastActive,
   () => {
@@ -47,9 +48,10 @@ watch(
 )
 
 async function checkLoginStatus() {
-  await firebase.auth().onAuthStateChanged(function (user) {
+  await firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
       userStore.login(user)
+
       router.replace({ name: 'kajianMain' })
 
       // User is signed in.
