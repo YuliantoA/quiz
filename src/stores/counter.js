@@ -30,34 +30,36 @@ export const useQuizStore = defineStore('scorer', () => {
 export const toastStore = defineStore('toast', () => {
   const toastMessage = ref('')
   const toastType = ref('')
+  const toastFunc = ref(Function)
   const toastActive = ref(false)
   const toastRemoveAll = ref(false)
-  function toastOpen({message,type}) {
+  function toastOpen({message,type,promFunc}) {
     toastMessage.value = message
     toastType.value = type
     toastActive.value = true
+    toastFunc.value = promFunc
   }
   function resetToast() {
     toastMessage.value = ''
     toastType.value = ''
     toastActive.value = false
+    toastFunc.value = null
   }
-  return {toastActive,toastOpen,toastMessage,toastType,resetToast,toastRemoveAll}
+  return {toastActive,toastOpen,toastMessage,toastType,resetToast,toastRemoveAll,toastFunc}
 })
 export const kajianStore = defineStore('user', () => {
   const email = ref('')
   const displayName = ref('')
-  const isLogin=ref(false)
+  const isLogin = ref(false)
+  const uid = ref()
  
-  function login({email:userEmail, displayName:userName}) {
-    // console.log(userEmail)
-    // console.log(userEmail)
-    // console.log(userEmail)
+  function login({email:userEmail, displayName:userName, uid:userID}) {
     email.value = userEmail
     displayName.value = userName
     isLogin.value = true
+    uid.value = userID
   }
-  return {login,email,displayName,isLogin}
+  return {login,email,displayName,isLogin,uid}
 })
 
 

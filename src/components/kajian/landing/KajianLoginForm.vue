@@ -1,16 +1,16 @@
 <template>
   <h1 class="h-32 text-kajian-blue text-3xl font-bold">Login Account</h1>
-  <div class="h-10 w-10/12 relative mb-7">
+  <div class="h-14 w-10/12 relative mb-7">
     <KajianTextInput
-      placeholder="Email"
+      :placeholder-text="'Email'"
       :type-input="'email'"
       :list-error="getErrorMessages(v$.email, 'Email')"
       v-model="state.email"
     ></KajianTextInput>
   </div>
-  <div class="h-10 w-10/12 relative mb-7">
+  <div class="h-14 w-10/12 relative mb-7">
     <KajianTextInput
-      placeholder="Password"
+      :placeholder-text="'Password'"
       :type-input="'password'"
       :list-error="getErrorMessages(v$.password, 'Password')"
       v-model="state.password"

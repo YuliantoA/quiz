@@ -2,8 +2,12 @@
   <div class="w-full h-full flex justify-center gap-x-3">
     <KajianUser></KajianUser>
     <div class="flex flex-col w-4/12 h-full">
-      <!-- {{ allPost }} -->
-      <KajianFeed :post-detail="post" v-for="(post, index, key) in allPost" :key="key"></KajianFeed>
+      <!-- <FeedControl></FeedControl> -->
+      <KajianFeed
+        :post-detail="post"
+        v-for="(post, index, key) in showPost"
+        :key="key"
+      ></KajianFeed>
 
       <div class="h-full w-full">
         <div class="w-full h-36 flex justify-center items-baseline mt-7">
@@ -20,16 +24,30 @@
 </template>
 
 <script setup>
-import KajianFeed from './kajianMain/MainFeed.vue'
-import KajianUser from './kajianMain/MainUser.vue'
-import KajianRecommend from './kajianMain/MainRecommend.vue'
-import { getPostAll, getPostAllTest } from '@/firebase/kajianDataService.js'
-import { isReactive, onMounted, reactive, ref } from 'vue'
+import KajianFeed from '@/components/kajian/kajianMain/MainFeed.vue'
+import KajianUser from '@/components/kajian/kajianMain/MainUser.vue'
+import KajianRecommend from '@/components/kajian/kajianMain/MainRecommend.vue'
+import FeedControl from '@/components/kajian/kajianMain/control/FeedControl.vue'
+import { getPostAllTest } from '@/firebase/kajianDataService.js'
+import { computed, onMounted, ref } from 'vue'
 
 onMounted(() => {
   getPost()
 })
+
 const allPost = ref({})
+const showPost = computed(() => {
+  let arrTemp = []
+  for (let i in allPost.value) {
+    arrTemp.push({ ...allPost.value[i], postId: i })
+  }
+  arrTemp.sort(compareCreateTime)
+  return arrTemp
+})
+
+function compareCreateTime(a, b) {
+  return new Date(a.createdDate) < new Date(b.createdDate)
+}
 async function getPost() {
   allPost.value = await getPostAllTest()
 }

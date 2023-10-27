@@ -1,7 +1,7 @@
 <template>
   <div class="bg-kajian-white h-fit w-full border border-kajian-darkGray rounded-xl mb-5">
     <div class="flex justify-center w-full h-full">
-      <div class="flex flex-col items-center justify-between">
+      <div class="flex flex-col items-center justify-between w-full">
         <div class="h-16 py-5 flex justify-start items-center w-full">
           <div
             class="mx-3 rounded-full bg-kajian-darkGray w-10 h-10 flex justify-center items-center"
@@ -34,7 +34,7 @@
             </div>
           </div>
           <hr class="border-kajian-gray border w-full" />
-          <div class="w-full text-sm my-2 h-fit">
+          <div class="w-full text-sm my-5 h-fit">
             <div class="flex flex-wrap h-[5rem]">
               <div class="w-2/4 font-light">
                 <span>Judul : </span>
@@ -42,7 +42,9 @@
               </div>
               <div class="w-2/4 font-light">
                 <span>Lokasi : </span>
-                <span class="capitalize">{{ props.postDetail.tempat.lokasi }}</span>
+                <span class="capitalize">{{
+                  `${props.postDetail.tempat.provinsi}, ${props.postDetail.tempat.kota}, ${props.postDetail.tempat.kecamatan}`
+                }}</span>
               </div>
               <hr class="w-full border-none h-0" />
               <div class="w-2/4 font-light">
@@ -97,9 +99,9 @@
 
 <script setup>
 import IconLike from '@/components/kajian/iconPersonal/IconLike.vue'
-import { onMounted, reactive, ref } from 'vue'
-import { kajianStore } from '../../../stores/counter'
+import { onMounted, ref } from 'vue'
 import { getUser, getUstad, getImage } from '@/firebase/kajianDataService.js'
+
 const props = defineProps({
   postDetail: {
     required: true,
@@ -124,15 +126,6 @@ async function getCreatorUser() {
   creator.value = await getUser(Object.keys(props.postDetail.creator)[0])
 }
 async function getImagePost() {
-  mainImage.value = await getImage(props.postDetail.poster)
+  mainImage.value = await getImage(props.postDetail.postId + '.' + props.postDetail.posterExt)
 }
-
-const userStore = kajianStore()
-
-let detailKajian = reactive({
-  judul: 'jangan kasar',
-  location: 'bandung',
-  ustad: 'Handy Bonny',
-  jadwal: '19:00, senin, 14 januari 2023'
-})
 </script>

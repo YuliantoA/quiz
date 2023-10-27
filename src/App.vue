@@ -32,7 +32,11 @@ watch(
   () => store.toastActive,
   () => {
     if (store.toastMessage != '') {
-      toast.value.notify({ message: store.toastMessage, type: store.toastType })
+      toast.value.notify({
+        message: store.toastMessage,
+        type: store.toastType,
+        promFunc: store.toastFunc
+      })
       store.resetToast()
     }
   }
@@ -52,11 +56,10 @@ async function checkLoginStatus() {
     if (user) {
       userStore.login(user)
 
-      router.replace({ name: 'kajianMain' })
+      // router.replace({ name: 'kajianMain' })
 
       // User is signed in.
     } else {
-      console.log('belum')
       router.replace({ name: 'landing' })
       // No user is signed in.
     }

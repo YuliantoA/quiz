@@ -144,6 +144,46 @@ const client = {
       store,
     });
   },
+  getAllProvince({ data, store }) {
+    return apiCall({
+      method: "get",
+      data,
+      url: 'https://idn-area.cyclic.app/provinces?limit=99&sortBy=code',
+      decryptResponse: false,
+      encryptRequest: false,
+      store,
+    });
+  },
+  getProvince({ data, store }) {
+    return apiCall({
+      method: "get",
+      data,
+      url: 'https://idn-area.cyclic.app/provinces/'+data,
+      decryptResponse: false,
+      encryptRequest: false,
+      store,
+    });
+  },
+  getKecamatan({ data, store }) {
+    return apiCall({
+      method: "get",
+      data,
+      url: 'https://idn-area.cyclic.app/districts?regencyCode='+data+'&limit=10&sortBy=code',
+      decryptResponse: false,
+      encryptRequest: false,
+      store,
+    });
+  },
+  getKota({ data, store }) {
+    return apiCall({
+      method: "get",
+      data,
+      url: 'https://idn-area.cyclic.app/regencies?provinceCode='+data+'&limit=10&sortBy=code',
+      decryptResponse: false,
+      encryptRequest: false,
+      store,
+    });
+  },
 
 };
 

@@ -36,6 +36,7 @@
 import KajianRegisFrom from '@/components/kajian/landing/KajianRegisForm.vue'
 import { normalizeMessageFirebase } from '@/helpers/StringHelper'
 import { firebase } from '@/firebase/firebase.js'
+import { createUser } from '@/firebase/kajianDataService.js'
 import { ref } from 'vue'
 import router from '../../../router'
 import { toastStore } from '@/stores/counter'
@@ -51,46 +52,28 @@ async function regis() {
   const data = await form.value.validateAndGetData()
   isErrorApi.value = false
   if (data.valid) {
-    // try {
-    //   const user = await firebase
-    //     .auth()
-    //     .createUserWithEmailAndPassword(data.formData.email, data.formData.password)
-    //     .catch((err) => console.log(err))
-    //   console.log(user)
-    //   const result = await user.user
-    //     .updateProfile({ displayName: data.formData.name })
-    //     .catch((err) => console.log(err))
-
-    //   console.log(result)
-    // } catch (err) {
-    //   console.log(err)
-    // }
-
     firebase
       .auth()
       .createUserWithEmailAndPassword(data.formData.email, data.formData.password)
       .then((result) => {
+        console.log(result)
         result.user
           .updateProfile({
             displayName: data.formData.name
           })
-          .then((resultUser) => {
-            console.log('test1')
+          .then(async () => {
+            await createUser({
+              data: { name: data.formData.name, share: 0, post: 0 },
+              uid: result.user.uid
+            })
             store.toastOpen({
               message: 'Create account success, please try login',
               type: 'success'
             })
             toLogin(false)
-            console.log(resultUser)
             isLoading.value = false
           })
-          .catch((asdd) => {
-            console.log(asdd)
-          })
-      })
-      .then((asd) => {
-        console.log('test2')
-        console.log(asd)
+          .catch(() => {})
       })
       .catch((error) => {
         isErrorApi.value = true

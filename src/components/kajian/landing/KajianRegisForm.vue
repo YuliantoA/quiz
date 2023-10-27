@@ -1,33 +1,33 @@
 <template>
   <h1 class="h-16 text-kajian-blue text-3xl font-bold">Create Account</h1>
-  <div class="h-10 w-10/12 relative mb-7">
+  <div class="h-14 w-10/12 relative mb-7">
     <KajianTextInput
-      placeholder="Display Name"
+      :placeholder-text="'Display Name'"
       :type-input="'text'"
       :list-error="getErrorMessages(v$.name, 'Display Name')"
       v-model="state.name"
     ></KajianTextInput>
   </div>
-  <div class="h-10 w-10/12 relative mb-7">
+  <div class="h-14 w-10/12 relative mb-7">
     <KajianTextInput
-      placeholder="Email"
+      :placeholder-text="'Email'"
       :type-input="'email'"
       :list-error="getErrorMessages(v$.email, 'Email')"
       v-model="state.email"
     ></KajianTextInput>
   </div>
-  <div class="h-10 w-10/12 relative mb-7">
+  <div class="h-14 w-10/12 relative mb-7">
     <KajianTextInput
-      placeholder="Password"
+      :placeholder-text="'Password'"
       :type-input="'password'"
       :list-error="getErrorMessages(v$.password, 'Password')"
       v-model="state.password"
       :need-eye="true"
     ></KajianTextInput>
   </div>
-  <div class="h-10 w-10/12 relative mb-7">
+  <div class="h-14 w-10/12 relative mb-7">
     <KajianTextInput
-      placeholder="Re-Password"
+      :placeholder-text="'Re-Password'"
       :type-input="'password'"
       :list-error="getErrorMessages(v$.rePassword, 'Password')"
       v-model="state.rePassword"

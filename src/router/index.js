@@ -62,7 +62,12 @@ const router = createRouter({
           path: 'main',
           name: 'kajianMain',
           component: () => import('@/components/kajian/KajianMain.vue')
-        }
+        },
+        {
+          path: 'createPost',
+          name: 'createPost',
+          component: () => import('@/components/kajian/createPost/CreatePost.vue')
+        },
       ]
     },
     {
