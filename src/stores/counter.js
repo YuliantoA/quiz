@@ -62,4 +62,12 @@ export const kajianStore = defineStore('user', () => {
   return {login,email,displayName,isLogin,uid}
 })
 
+export const kajianFeedStore = defineStore('controlFeed', () => {
+  const sortComponent = ref()
+  const sortAsc = ref()
+  const search = ref()
+
+  return {sortComponent,sortAsc,search}
+})
+
 

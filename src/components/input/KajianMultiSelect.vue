@@ -90,7 +90,7 @@ const placeholderActive = ref(false)
 function trigger() {
   props.disabled ? '' : multiselect.value.open()
 }
-onClickOutside(target, (event) => multiselect.value.close())
+onClickOutside(target, () => multiselect.value.close())
 function checkSearch(value) {
   value.length > 0 ? (placeholderActive.value = true) : (placeholderActive.value = false)
 }

@@ -55,13 +55,8 @@ async function checkLoginStatus() {
   await firebase.auth().onAuthStateChanged(async function (user) {
     if (user) {
       userStore.login(user)
-
-      // router.replace({ name: 'kajianMain' })
-
-      // User is signed in.
     } else {
       router.replace({ name: 'landing' })
-      // No user is signed in.
     }
     isLoading.value = false
   })

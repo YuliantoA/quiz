@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen w-full bg-kajian-gray flex justify-center items-center">
+  <div class="h-screen w-full bg-kajian-gray flex justify-center items-center font-roboto">
     <div class="w-8/12 h-4/6 flex shadow-xl">
       <div
         class="w-6/12 h-full bg-kajian-blue flex justify-center items-center border-r border-kajian-gray"

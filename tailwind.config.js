@@ -8,7 +8,8 @@ module.exports = {
     
     extend: {
      fontFamily: {
-    gardenia: ['gardenia', 'sans-serif'],
+        gardenia: ['gardenia', 'sans-serif'],
+       roboto: ['Roboto', 'sans-serif'],
       },
       backgroundImage: (theme) => ({
         'multiselect-caret': `url("${svgToDataUri(

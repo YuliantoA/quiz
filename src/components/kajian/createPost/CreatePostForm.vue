@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center relative">
+  <div
+    class="w-full max-h-[41rem] flex flex-col flex-auto items-center relative scrollbar overflow-y-scroll overflow-x-hidden"
+  >
     <div class="w-full h-[7rem]">
       <KajianTextInput
         :placeholder-text="'Judul Kajian'"
@@ -39,8 +41,6 @@
           value-prop="code"
           @update-value="
             ({ value, text }) => {
-              console.log(value)
-              console.log(text)
               state.province = text.toLowerCase()
               provinceCode = value
             }
@@ -90,8 +90,13 @@
       :model-value="state.poster"
       :ext="imageExt"
       @update-poster="updatePoster"
-      class="h-[14rem] w-full"
+      class="h-[8rem] w-full"
     ></KajianDropzone>
+    <CkeditorInput
+      :model-value="state.description"
+      @update-value="updateDescription"
+      :list-error="getErrorMessages(v$.description, 'Description')"
+    />
   </div>
 </template>
 
@@ -100,6 +105,7 @@ import KajianTextInput from '@/components/input/KajianTextInput.vue'
 import KajianDatePicker from '@/components/input/KajianDatePicker.vue'
 import KajianDropzone from '@/components/input/KajianDropzone.vue'
 import KajianMultiSelect from '@/components/input/KajianMultiSelect.vue'
+import CkeditorInput from '@/components/input/CkeditorInput.vue'
 import client from '@/helpers/ApiClient'
 import { imageExt } from '@/helpers/constantValue'
 import { onMounted, reactive, ref, unref } from 'vue'
@@ -116,7 +122,8 @@ const state = reactive({
   poster: [],
   province: '',
   kota: '',
-  kecamatan: ''
+  kecamatan: '',
+  description: ''
 })
 
 const rules = {
@@ -126,7 +133,8 @@ const rules = {
   poster: { required },
   province: { required },
   kota: { required },
-  kecamatan: { required }
+  kecamatan: { required },
+  description: { required }
 }
 defineExpose({
   validateAndGetData
@@ -180,6 +188,9 @@ async function validateAndGetData() {
 
 function updatePoster(value) {
   state.poster = value
+}
+function updateDescription(value) {
+  state.description = value
 }
 async function getProvince() {
   const result = await client.getAllProvince({})

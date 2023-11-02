@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 import { faBookmark,faComment,faEye,faEyeSlash,faCalendar  } from '@fortawesome/free-regular-svg-icons'
-import { faComment as fasComment, faArrowLeft, faUser, faHeart,faHouse, faHippo, faShieldDog,faShieldCat,faThumbsUp, faRepeat,faShare,faCircleExclamation, faRightFromBracket,faSort  } from '@fortawesome/free-solid-svg-icons'
+import { faComment as fasComment, faArrowLeft, faUser, faHeart,faHouse, faHippo, faShieldDog,faShieldCat,faThumbsUp, faRepeat,faShare,faCircleExclamation, faRightFromBracket,faSortUp,faSortDown,faFilter,faMagnifyingGlass  } from '@fortawesome/free-solid-svg-icons'
 
 import {registerSW} from "virtual:pwa-register"
 
@@ -34,7 +34,7 @@ import { createVfm } from 'vue-final-modal'
 import 'vue-final-modal/style.css'
 
 /* add icons to the library */
-library.add(faBookmark,faComment,fasComment,faArrowLeft,faUser,faHeart,faHouse,faHippo, faShieldDog,faShieldCat,faThumbsUp, faRepeat,faShare,faEye,faEyeSlash,faCircleExclamation,faRightFromBracket,faCalendar,faSort)
+library.add(faBookmark,faComment,fasComment,faArrowLeft,faUser,faHeart,faHouse,faHippo, faShieldDog,faShieldCat,faThumbsUp, faRepeat,faShare,faEye,faEyeSlash,faCircleExclamation,faRightFromBracket,faCalendar,faSortUp,faSortDown,faFilter,faMagnifyingGlass)
 
 registerSW({immediate:true})
 const vfm = createVfm()
