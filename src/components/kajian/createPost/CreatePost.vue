@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import createPostForm from './createPostForm.vue'
+import createPostForm from '@/components/kajian/createPost/createPostForm.vue'
 import { insertPost, insertImagePost } from '@/firebase/kajianDataService.js'
 import { kajianStore, toastStore } from '@/stores/counter.js'
 import router from '@/router'
