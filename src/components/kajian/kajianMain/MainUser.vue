@@ -1,23 +1,28 @@
 <template>
   <input @change="onBrowse" ref="fileUpload" type="file" accept=".jpg,.jpeg,.png" hidden />
-  <div class="w-2/12 rounded-xl h-[20rem] bg-kajian-white flex flex-col items-center px-5">
+  <div class="w-2/12 rounded-xl h-[20rem] bg-kajian-white flex flex-col items-center px-5 pt-10">
     <div class="w-full h-[8rem] flex justify-center items-center">
       <div
         @click="chooseFiles"
         class="w-[6rem] h-[6rem] bg-kajian-darkGray rounded-full outline-dashed hover:outline-double cursor-pointer hover:bg-kajian-darkGray/50 relative hover:text-3xl text-xl transition-all duration-300 ease-out"
-        :class="[userPhoto ? 'outline-kajian-lightBlue' : 'outline-kajian-darkestGray']"
+        :class="[
+          userPhoto && !isLoading ? 'outline-kajian-lightBlue' : 'outline-kajian-darkestGray',
+          isLoading ? 'animate-pulse' : 'animate-none'
+        ]"
       >
-        <div v-if="!userPhoto" class="absolute bottom-3 right-9">
-          <font-awesome-icon :icon="['fas', 'camera']" style="color: #ffffff" />
-        </div>
-        <img
-          v-if="userPhoto"
-          class="object-cover rounded-full w-[6rem] h-[6rem]"
-          :src="userPhoto"
-        />
+        <template v-if="!isLoading">
+          <div v-if="!userPhoto" class="absolute bottom-3 right-9">
+            <font-awesome-icon :icon="['fas', 'camera']" style="color: #ffffff" />
+          </div>
+          <img
+            v-if="userPhoto"
+            class="object-cover rounded-full w-[6rem] h-[6rem]"
+            :src="userPhoto"
+          />
+        </template>
       </div>
     </div>
-    <h5 class="font-bold text-lg">
+    <h5 class="font-bold text-lg py-2">
       {{ userStore.displayName ? userStore.displayName : 'default' }}
     </h5>
     <hr class="bg-kajian-blue h-[.1rem] w-full" />
@@ -46,17 +51,19 @@ import {
   getCountLikedPost,
   getUser
 } from '@/firebase/kajianDataService.js'
-import { kajianStore, toastStore } from '@/stores/counter'
+import { kajianStore, toastStore, kajianFeedStore } from '@/stores/counter'
 import { compressImage } from '@/helpers/ImageHelper.js'
 
+const controlFeedStore = kajianFeedStore()
 const fileUpload = ref()
 const userStore = kajianStore()
 const toast = toastStore()
-const isLoading = ref(false)
+const isLoading = ref(true)
 const userPhoto = ref('')
 const countPost = ref(0)
 const countLike = ref(0)
 async function onBrowse(e) {
+  isLoading.value = true
   toast.toastOpen({
     message: {
       pending: 'Uploading your photo',
@@ -83,8 +90,8 @@ async function uploadImage(e) {
     isUpdate: userPhoto.value.length > 0
   })
   if (uploadImage) {
-    isLoading.value = false
     getPhoto()
+    controlFeedStore.refetchPost = true
     return Promise.resolve('success')
   } else {
     isLoading.value = false
@@ -99,6 +106,7 @@ async function getPhoto() {
         (await userStore.getUid().value) + '.' + isUserUploadPhoto.imageExt
       ))
     : ''
+  isLoading.value = false
 }
 
 function chooseFiles() {

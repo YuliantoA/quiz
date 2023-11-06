@@ -78,8 +78,9 @@ export const kajianFeedStore = defineStore('controlFeed', () => {
   const sortComponent = ref()
   const sortAsc = ref()
   const search = ref()
+  const refetchPost = ref(false)
 
-  return {sortComponent,sortAsc,search}
+  return {sortComponent,sortAsc,search,refetchPost}
 })
 
 

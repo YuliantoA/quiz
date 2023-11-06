@@ -66,6 +66,13 @@ watch(
   }
 )
 watch(
+  () => feedStore.refetchPost,
+  (newValue) => {
+    newValue ? getPost() : ''
+    feedStore.refetchPost = false
+  }
+)
+watch(
   () => feedStore.search,
   (newValue) => {
     search.value = newValue
@@ -116,6 +123,8 @@ function compareJudul(a, b) {
   }
 }
 async function getPost() {
+  allPost.value = []
+  isLoading.value = true
   const data = await getPostAllOnce()
   processData(data)
 }
