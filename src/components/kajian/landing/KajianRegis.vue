@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center pt-24 pb-16 px-10">
+  <div class="w-full h-full flex flex-col items-center pt-10 pb-16 px-10">
     <KajianRegisFrom ref="form"></KajianRegisFrom>
     <div
       v-if="isErrorApi"

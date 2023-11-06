@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
+
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)
   const doubleCount = computed(() => count.value * 2)
@@ -51,7 +52,12 @@ export const kajianStore = defineStore('user', () => {
   const email = ref('')
   const displayName = ref('')
   const isLogin = ref(false)
-  const uid = ref()
+  const uid = ref('')
+
+  function getUid() {
+    return uid
+  }
+
  
   function login({email:userEmail, displayName:userName, uid:userID}) {
     email.value = userEmail
@@ -59,7 +65,13 @@ export const kajianStore = defineStore('user', () => {
     isLogin.value = true
     uid.value = userID
   }
-  return {login,email,displayName,isLogin,uid}
+  function logout() {
+    email.value = ''
+    displayName.value = ''
+    isLogin.value = false
+    uid.value = ''
+  }
+  return {login,email,displayName,isLogin,uid,getUid,logout}
 })
 
 export const kajianFeedStore = defineStore('controlFeed', () => {

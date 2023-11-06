@@ -110,17 +110,17 @@ async function uploadPost(formValue) {
     })
     if (uploadImage) {
       isLoading.value = false
-      Promise.resolve('success')
       router.replace({ name: 'kajianMain' })
+      return Promise.resolve('success')
     } else {
       isLoading.value = false
-      Promise.reject('fail')
       router.replace({ name: 'kajianMain' })
+      return Promise.reject('error')
     }
   } else {
     isLoading.value = false
-    Promise.reject('fail')
     router.replace({ name: 'kajianMain' })
+    return Promise.reject('error')
   }
 }
 </script>

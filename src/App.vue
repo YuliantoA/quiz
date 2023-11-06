@@ -6,7 +6,7 @@
   >
     <LoaderSpinner class=""></LoaderSpinner>
   </div>
-  <div class="w-screen">
+  <div v-if="!isLoading" class="w-screen">
     <RouterView />
   </div>
 </template>
@@ -15,18 +15,12 @@
 import LoaderSpinner from '@/components/util/LoaderSpinner.vue'
 import { RouterView } from 'vue-router'
 import ToastMessage from '@/components/util/ToastMessage.vue'
-import { toastStore, kajianStore } from '@/stores/counter'
-import { onMounted, ref, watch } from 'vue'
-import { firebase } from '@/firebase/firebase.js'
-import router from './router'
+import { toastStore } from '@/stores/counter'
+import { ref, watch } from 'vue'
 
 const store = toastStore()
-const userStore = kajianStore()
 const toast = ref(null)
-const isLoading = ref(true)
-onMounted(() => {
-  checkLoginStatus()
-})
+const isLoading = ref(false)
 
 watch(
   () => store.toastActive,
@@ -50,17 +44,6 @@ watch(
     }
   }
 )
-
-async function checkLoginStatus() {
-  await firebase.auth().onAuthStateChanged(async function (user) {
-    if (user) {
-      userStore.login(user)
-    } else {
-      router.replace({ name: 'landing' })
-    }
-    isLoading.value = false
-  })
-}
 </script>
 
 <style scoped></style>

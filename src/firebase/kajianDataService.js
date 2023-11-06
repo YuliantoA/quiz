@@ -53,6 +53,15 @@ async function getImage(imageId) {
   })
   return result
 }
+async function getUserPhoto(userId) {
+  const result = await storage
+  .ref('kajian/user/'+userId)
+  .getDownloadURL()
+  .catch((error) => {
+    return error
+  })
+  return result
+}
 async function insertImagePost({data,filename}) {
   const result = await storage
   .ref('kajian/post/'+filename)
@@ -62,6 +71,28 @@ async function insertImagePost({data,filename}) {
   })
   return result
 }
+async function insertImageUser({ data, filename }) {
+  const imgExt = filename.split('.')[1]
+  const uid = filename.split('.')[0]
+  let result = await storage
+  .ref('kajian/user/'+filename)
+  .put(data)
+  .catch((error) => {
+    return error
+  })
+  await database
+  .ref('users/'+uid)
+     .update({ imageExt: imgExt }, (error) => {
+       if (error) {
+         result = false
+       } else {
+         result = true
+    }
+  })
+  return result
+}
+
+
 
 async function insertPost({data}) {
   const result = await database
@@ -140,4 +171,27 @@ async function getCommentCounterPost({ id, func }) {
   })
 }
 
-export {getPostAll,getPostAllOnce,getUser,getUstad,getImage,getAllUstad,insertPost,insertImagePost,createUser,updateLikeContent,getCommentPost,postComment,getLikedCounterPost,getCommentCounterPost}
+async function getCountPost(uid) {
+  const db = database.ref("posts");
+  let result = 0
+  const snapshot = await db.get()
+  snapshot.forEach((child) => {
+    Object.keys(child.val().creator)[0] === uid ? result++ :''
+  })
+  return result
+}
+async function getCountLikedPost(uid) {
+  const db = database.ref("posts");
+  let result = 0
+  const snapshot = await db.get()
+  snapshot.forEach((child) => {
+    Object.keys(child.val().creator)[0] === uid ? result++ :''
+  })
+  return result
+}
+
+export {
+  getPostAll, getPostAllOnce, getUser, getUstad, getImage, getAllUstad, insertPost,
+  insertImagePost, createUser, updateLikeContent, getCommentPost, postComment, getLikedCounterPost, getCommentCounterPost,
+  insertImageUser,getUserPhoto,getCountPost,getCountLikedPost
+}

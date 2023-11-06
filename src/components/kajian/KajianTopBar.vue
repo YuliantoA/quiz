@@ -27,7 +27,7 @@
         <template #popper>
           <div class="h-20 w-24 flex flex-col justify-center items-center">
             <!-- <button class="w-full h-1/2 border border-kajian-gray">detail</button> -->
-            <div>{{ userStore.displayName }}</div>
+            <!-- <div>{{ userStore.displayName }}</div> -->
             <div
               @click="logout"
               class="flex items-center justify-center w-8/12 h-10 py-2 px-10 border border-kajian-gray hover:bg-kajian-darkGray cursor-pointer"
@@ -53,6 +53,7 @@ import { kajianStore } from '../../stores/counter'
 const userStore = kajianStore()
 async function logout() {
   await firebase.auth().signOut()
-  router.replace({ name: 'landing' })
+  userStore.logout()
+  router.replace({ name: 'kajianLogin' })
 }
 </script>

@@ -15,6 +15,7 @@
       :list-error="getErrorMessages(v$.password, 'Password')"
       v-model="state.password"
       :need-eye="true"
+      @keyup.enter="submit"
     ></KajianTextInput>
   </div>
 </template>
@@ -35,12 +36,11 @@ const rules = {
   password: { required }
 }
 const v$ = useVuelidate(rules, state)
-
+const emit = defineEmits(['submit'])
 defineExpose({
   validateAndGetData
 })
 async function validateAndGetData() {
-  // const isFormCorrect = await unref(v$).$validate()
   unref(v$).$validate()
   return {
     valid: !v$.value.$invalid,
@@ -48,6 +48,8 @@ async function validateAndGetData() {
       ...state
     }
   }
-  // console.log(v$)
+}
+function submit() {
+  emit('submit')
 }
 </script>

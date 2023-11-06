@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col items-center py-28 px-10">
-    <KajianLoginForm ref="form"></KajianLoginForm>
+    <KajianLoginForm ref="form" @submit="login"></KajianLoginForm>
     <div class="w-full h-16 flex items-start justify-end px-10">
       <button
         @click="toRegis()"
@@ -22,7 +22,7 @@
     <div class="w-full flex items-center justify-center h-5 mt-10">
       <button
         :disabled="isLoading"
-        @click="regis"
+        @click="login"
         class="w-10/12 py-3 rounded-full bg-gradient-to-br from-kajian-lightBlue to-kajian-darkBlue uppercase text-kajian-white tracking-widest hover:shadow-xl flex justify-center items-center"
       >
         <div v-if="isLoading" class="Toastify__spinner"></div>
@@ -47,7 +47,7 @@ const isLoading = ref(false)
 const isErrorApi = ref(false)
 const messageError = ref('')
 
-async function regis() {
+async function login() {
   isLoading.value = true
   isErrorApi.value = false
   const data = await form.value.validateAndGetData()
