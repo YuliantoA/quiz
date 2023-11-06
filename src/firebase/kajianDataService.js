@@ -104,10 +104,23 @@ async function insertPost({data}) {
   return result
 }
 
-async function updateLikeContent({ data,id }) {
-  const result = await database
-  .ref('posts/'+id)
-  .update(data)
+async function updateLikeContent({ data,id,statusLike }) {
+  let result = await database
+  .ref('like/'+id+'/count')
+  .set(data.count)
+  .catch((error) => {
+    return(error)
+  })
+  statusLike ?
+  result = await database
+    .ref('like/' + id + '/user')
+    .child(Object.keys(data.user)[0]).set(true)
+  .catch((error) => {
+    return(error)
+  }) :
+  result = await database
+    .ref('like/' + id + '/user/'+Object.keys(data.user)[0])
+    .remove()
   .catch((error) => {
     return(error)
   })
@@ -161,10 +174,17 @@ async function postComment({ data,id }) {
 }
 
 async function getLikedCounterPost({ id, func }) {
-  await database.ref('posts/' + id + '/like/count').on('value', (snapshot) => {
+  await database.ref('like/' + id + '/count').on('value', (snapshot) => {
     func(snapshot.val())
   })
 }
+
+async function getDetailLikedPost({ id }) {
+  const db = database.ref("like/"+id+'/user');
+  const result = await db.get()
+  return result.val()
+}
+
 async function getCommentCounterPost({ id, func }) {
   await database.ref('posts/' + id + '/comment').on('value', (snapshot) => {
     func(snapshot.val())
@@ -181,11 +201,11 @@ async function getCountPost(uid) {
   return result
 }
 async function getCountLikedPost(uid) {
-  const db = database.ref("posts");
+  const db = database.ref("like");
   let result = 0
   const snapshot = await db.get()
   snapshot.forEach((child) => {
-    Object.keys(child.val().creator)[0] === uid ? result++ :''
+    child.val().user[uid] ? result++ : ''
   })
   return result
 }
@@ -193,5 +213,5 @@ async function getCountLikedPost(uid) {
 export {
   getPostAll, getPostAllOnce, getUser, getUstad, getImage, getAllUstad, insertPost,
   insertImagePost, createUser, updateLikeContent, getCommentPost, postComment, getLikedCounterPost, getCommentCounterPost,
-  insertImageUser,getUserPhoto,getCountPost,getCountLikedPost
+  insertImageUser,getUserPhoto,getCountPost,getCountLikedPost,getDetailLikedPost
 }

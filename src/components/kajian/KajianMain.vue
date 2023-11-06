@@ -12,16 +12,15 @@
           v-for="(post, index, key) in showPost"
           :key="key"
           :index="index"
-          @liked-click="likedClicked"
         ></KajianFeed>
       </template>
 
-      <div v-show="false" class="h-full w-full">
+      <div @click="showAllPost = !showAllPost" class="h-full w-full">
         <div class="w-full h-36 flex justify-center items-baseline mt-7">
           <button
             class="border-2 border-kajian-darkBlue py-1 px-5 rounded-2xl text-kajian-darkBlue font-bold hover:bg-kajian-white hover:border-4 hover:shadow-xl"
           >
-            See more post
+            {{ showAllPost ? 'See less post' : 'See more post' }}
           </button>
         </div>
       </div>
@@ -36,7 +35,7 @@ import KajianUser from '@/components/kajian/kajianMain/MainUser.vue'
 import KajianRecommend from '@/components/kajian/kajianMain/MainRecommend.vue'
 import FeedControl from '@/components/kajian/kajianMain/control/FeedControl.vue'
 import KajianFeedSkeleton from '@/components/kajian/kajianMain/MainFeedSkeleton.vue'
-import { updateLikeContent, getPostAllOnce } from '@/firebase/kajianDataService.js'
+import { getPostAllOnce } from '@/firebase/kajianDataService.js'
 import { computed, onMounted, ref } from 'vue'
 import { kajianFeedStore } from '../../stores/counter'
 import { watch } from 'vue'
@@ -47,7 +46,7 @@ onMounted(() => {
 })
 const feedStore = kajianFeedStore()
 const allPost = ref({})
-
+const showAllPost = ref(false)
 const sortComponent = ref('')
 const sortAsc = ref('')
 const search = ref('')
@@ -98,6 +97,7 @@ const showPost = computed(() => {
     }
   }
   sortAsc.value ? arrTemp : arrTemp.reverse()
+  showAllPost.value ? arrTemp : arrTemp.splice(2)
   return arrTemp
 })
 
@@ -128,10 +128,5 @@ async function processData(data) {
   }
   allPost.value = data
   isLoading.value = false
-}
-async function likedClicked(param) {
-  allPost.value[param.id].like.count = param.data.like.count
-  await updateLikeContent({ ...param })
-  // console.log(param.data.like.count)
 }
 </script>

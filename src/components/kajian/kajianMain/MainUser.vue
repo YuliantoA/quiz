@@ -17,13 +17,16 @@
         />
       </div>
     </div>
+    <h5 class="font-bold text-lg">
+      {{ userStore.displayName ? userStore.displayName : 'default' }}
+    </h5>
     <hr class="bg-kajian-blue h-[.1rem] w-full" />
     <div class="flex flex-col mt-5 w-full h-[10rem] space-y-4">
       <div
         class="w-full flex space-x-3 items-center justify-center cursor-default hover:shadow-sm hover:text-kajian-red"
       >
         <font-awesome-icon class="" :icon="['far', 'thumbs-up']" />
-        <p class="text-black">9 Liked Post</p>
+        <p class="text-black">{{ `${countLike} Liked Post` }}</p>
       </div>
       <div
         class="w-full flex space-x-3 items-center justify-center cursor-default hover:shadow-sm hover:text-kajian-red"
@@ -52,6 +55,7 @@ const toast = toastStore()
 const isLoading = ref(false)
 const userPhoto = ref('')
 const countPost = ref(0)
+const countLike = ref(0)
 async function onBrowse(e) {
   toast.toastOpen({
     message: {
@@ -67,6 +71,7 @@ async function onBrowse(e) {
 onMounted(() => {
   getPhoto()
   getAllPostCount()
+  getAllLikedPostCount()
 })
 
 async function uploadImage(e) {
@@ -102,5 +107,9 @@ function chooseFiles() {
 
 async function getAllPostCount() {
   countPost.value = await getCountPost(userStore.getUid().value)
+}
+
+async function getAllLikedPostCount() {
+  countLike.value = await getCountLikedPost(userStore.uid)
 }
 </script>

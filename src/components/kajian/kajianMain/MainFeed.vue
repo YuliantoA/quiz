@@ -74,20 +74,32 @@
           </div>
           <hr class="border-kajian-gray border w-full" />
           <div class="flex justify-around w-full items-center text-sm h-12">
-            <div @click="likeClick" class="cursor-pointer hover:text-kajian-darkBlue">
-              <font-awesome-icon
-                :class="[isLiked ? 'text-kajian-red' : '']"
-                class="mr-1"
-                :icon="['fas', 'thumbs-up']"
-              />
-              <span>like</span>
+            <div class="w-1/3 text-center flex justify-center items-center">
+              <div
+                v-if="!isLikeLoading"
+                @click="likeClick"
+                class="cursor-pointer hover:text-kajian-darkBlue w-fit"
+              >
+                <font-awesome-icon
+                  :class="[isLiked ? 'text-kajian-red' : '']"
+                  class="mr-1"
+                  :icon="['fas', 'thumbs-up']"
+                />
+                <span>like</span>
+              </div>
+              <div v-else class="cursor-default w-full flex justify-center items-center">
+                <div class="h-[1rem] rounded-lg bg-kajian-gray animate-pulse w-2/3"></div>
+              </div>
             </div>
-            <div @click="commentClick" class="cursor-pointer hover:text-kajian-darkBlue">
-              <font-awesome-icon :icon="['fas', 'comment']" /> <span>comment</span>
+            <div class="w-1/3 text-center flex justify-center items-center">
+              <div @click="commentClick" class="cursor-pointer hover:text-kajian-darkBlue w-fit">
+                <font-awesome-icon :icon="['fas', 'comment']" /> <span>comment</span>
+              </div>
             </div>
-
-            <div class="cursor-pointer hover:text-kajian-darkBlue">
-              <font-awesome-icon :icon="['fas', 'share']" /> <span>share</span>
+            <div class="w-1/3 text-center flex justify-center items-center">
+              <div class="cursor-pointer hover:text-kajian-darkBlue w-fit">
+                <font-awesome-icon :icon="['fas', 'share']" /> <span>share</span>
+              </div>
             </div>
           </div>
           <hr v-if="isComment" class="border-kajian-gray border w-full" />
@@ -157,7 +169,9 @@ import {
   getCommentPost,
   postComment,
   getLikedCounterPost,
-  getCommentCounterPost
+  getDetailLikedPost,
+  getCommentCounterPost,
+  updateLikeContent
 } from '@/firebase/kajianDataService.js'
 import { kajianStore } from '@/stores/counter'
 const props = defineProps({
@@ -169,7 +183,6 @@ const props = defineProps({
     type: Number
   }
 })
-const emit = defineEmits(['likedClick'])
 const userStore = kajianStore()
 const isCommentLoading = ref(true)
 const isDetailOpen = ref(false)
@@ -181,6 +194,8 @@ const listComment = ref([])
 const commentInput = ref('')
 const maxComment = 40
 const likeCount = ref(0)
+const isLikeLoading = ref(true)
+const detailLike = ref([])
 const commentCount = ref(0)
 const { date, time } = serializeDateTime(props.postDetail.waktu)
 watch(commentInput, (newValue) => {
@@ -192,18 +207,24 @@ watch(commentInput, (newValue) => {
 })
 
 onMounted(() => {
-  getLikeCounter()
+  getLike()
   getCommentCounter()
 })
 
-function likeClick() {
+async function likeClick() {
   isLiked.value = !isLiked.value
   const data = {
-    like: {
-      count: isLiked.value ? props.postDetail.like.count + 1 : props.postDetail.like.count - 1
+    count: isLiked.value ? likeCount.value + 1 : likeCount.value - 1,
+    user: {
+      [userStore.uid]: true
     }
   }
-  emit('likedClick', { data: data, id: props.postDetail.postId, index: props.index })
+  await updateLikeContent({
+    data: data,
+    id: props.postDetail.postId,
+    index: props.index,
+    statusLike: isLiked.value
+  })
 }
 async function commentClick() {
   isComment.value = !isComment.value
@@ -234,13 +255,21 @@ async function sendComment() {
   commentInput.value = ''
 }
 
-async function getLikeCounter() {
+async function getLike() {
   await getLikedCounterPost({
     id: props.postDetail.postId,
     func: (data) => {
       likeCount.value = data
     }
   })
+  detailLike.value = await getDetailLikedPost({ id: props.postDetail.postId })
+  for (let i in detailLike.value) {
+    if (i === userStore.uid) {
+      isLiked.value = true
+      break
+    }
+  }
+  isLikeLoading.value = false
 }
 async function getCommentCounter() {
   await getCommentCounterPost({
