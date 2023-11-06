@@ -39,7 +39,7 @@ import { getPostAllOnce } from '@/firebase/kajianDataService.js'
 import { computed, onMounted, ref } from 'vue'
 import { kajianFeedStore } from '../../stores/counter'
 import { watch } from 'vue'
-import { getUser, getUstad, getImage } from '@/firebase/kajianDataService.js'
+import { getUser, getUstad, getImage, getUserPhoto } from '@/firebase/kajianDataService.js'
 
 onMounted(() => {
   getPost()
@@ -125,7 +125,13 @@ async function processData(data) {
     data[i].image = await getImage(i + '.' + data[i].posterExt)
     data[i].ustadFetch = await getUstad(Object.keys(data[i].ustad)[0])
     data[i].creatorFetch = await getUser(Object.keys(data[i].creator)[0])
+    data[i].creatorFetch.imageExt
+      ? (data[i].creatorImage = await getUserPhoto(
+          Object.keys(data[i].creator)[0] + '.' + data[i].creatorFetch.imageExt
+        ))
+      : '' //check user upload a photo
   }
+
   allPost.value = data
   isLoading.value = false
 }

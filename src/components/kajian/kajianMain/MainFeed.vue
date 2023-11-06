@@ -6,7 +6,12 @@
           <div
             class="mx-3 rounded-full bg-kajian-darkGray w-10 h-10 flex justify-center items-center"
           >
-            <font-awesome-icon :icon="['fas', 'user']" />
+            <img
+              v-if="props.postDetail.creatorImage"
+              class="rounded-full w-10 h-10 object-cover"
+              :src="props.postDetail.creatorImage"
+            />
+            <font-awesome-icon v-else :icon="['fas', 'user']" />
           </div>
           <div v-if="props.postDetail.creatorFetch">{{ props.postDetail.creatorFetch?.name }}</div>
         </div>
