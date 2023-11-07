@@ -21,12 +21,17 @@
         <div class="h-fit flex flex-col w-full items-center px-5 mt-2">
           <div class="h-10 text-xs flex justify-between items-center w-full mb-2">
             <div class="w-6/12 flex items-center">
-              <template v-for="index in 3" :key="index">
-                <IconLike class="first:ml-0 -ml-2">
-                  <font-awesome-icon :icon="['fas', 'hippo']" />
-                </IconLike>
+              <template v-for="(i, index, key) in detailLike" :key="index">
+                <template v-if="key <= 3">
+                  <IconLike class="first:ml-0 -ml-2">
+                    <img v-if="i" class="w-full h-full rounded-full object-cover" :src="i" />
+                    <font-awesome-icon v-else :icon="['fas', 'hippo']" />
+                  </IconLike>
+                </template>
               </template>
-              <span class="ml-1 text-kajian-darkGray">{{ likeCount }}</span>
+              <span class="ml-1 text-kajian-darkGray">{{
+                likeCount ? likeCount : 'be the first to like'
+              }}</span>
             </div>
             <div class="w-6/12 flex justify-end items-center">
               <div class="mr-2 cursor-pointer hover:text-kajian-darkBlue text-kajian-darkGray">
@@ -130,6 +135,7 @@
                     v-model="commentInput"
                     type="text"
                     class="justify-evenly outline-kajian-darkGray outline p-3 rounded-lg w-full shadow-md h-5/6 text-sm"
+                    @keyup.enter="sendComment"
                   />
                   <div
                     @click="sendComment"
@@ -176,7 +182,8 @@ import {
   getLikedCounterPost,
   getDetailLikedPost,
   getCommentCounterPost,
-  updateLikeContent
+  updateLikeContent,
+  getAndCheckUserPhoto
 } from '@/firebase/kajianDataService.js'
 import { kajianStore } from '@/stores/counter'
 const props = defineProps({
@@ -211,12 +218,22 @@ watch(commentInput, (newValue) => {
     : (commentInput.value = commentInput.value.substring(0, 40))
 })
 
+watch(
+  () => props.postDetail.postId,
+  () => {
+    getLike()
+    getCommentCounter()
+  }
+)
+
 onMounted(() => {
   getLike()
   getCommentCounter()
 })
 
 async function likeClick() {
+  detailLike.value = {}
+  isLikeLoading.value = true
   isLiked.value = !isLiked.value
   const data = {
     count: isLiked.value ? likeCount.value + 1 : likeCount.value - 1,
@@ -230,6 +247,8 @@ async function likeClick() {
     index: props.index,
     statusLike: isLiked.value
   })
+
+  getLike()
 }
 async function commentClick() {
   isComment.value = !isComment.value
@@ -254,13 +273,16 @@ async function commentClick() {
 async function sendComment() {
   const data = {
     comment: commentInput.value,
-    user: userStore.uid
+    user: userStore.uid,
+    created: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString()
   }
   await postComment({ data, id: props.postDetail.postId })
   commentInput.value = ''
 }
 
 async function getLike() {
+  isLikeLoading.value = true
+  isLiked.value = false
   await getLikedCounterPost({
     id: props.postDetail.postId,
     func: (data) => {
@@ -275,6 +297,7 @@ async function getLike() {
     }
   }
   isLikeLoading.value = false
+  getDetailImageLikedPost()
 }
 async function getCommentCounter() {
   await getCommentCounterPost({
@@ -283,5 +306,10 @@ async function getCommentCounter() {
       commentCount.value = data
     }
   })
+}
+async function getDetailImageLikedPost() {
+  for (let i in detailLike.value) {
+    detailLike.value[i] = await getAndCheckUserPhoto({ uid: i })
+  }
 }
 </script>

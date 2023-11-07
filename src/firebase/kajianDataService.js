@@ -53,6 +53,22 @@ async function getImage(imageId) {
   })
   return result
 }
+
+async function getAndCheckUserPhoto({ uid }) {
+  const db = database.ref("users/"+uid);
+  let result = await db.get()
+  if (result.val().imageExt) {
+    result = await storage
+    .ref('kajian/user/'+uid+'.'+result.val().imageExt)
+    .getDownloadURL()
+    .catch((error) => {
+      return error
+    })
+    return result
+  }  else
+  return null
+}
+
 async function getUserPhoto(userId) {
   const result = await storage
   .ref('kajian/user/'+userId)
@@ -137,12 +153,13 @@ async function updateCommentContent({ data,id }) {
 }
 
 async function getCommentPost({data,func,emptyFunc}) {
-  const db = database.ref("comment").child(data);
+  const db = database.ref("comment").child(data).orderByKey();
   await db.on('value', async (snapshot) => {
     let result = []
     let user = []
     snapshot.exists() ?
-    await snapshot.forEach(function (value) {
+      await snapshot.forEach(function (value) {
+      // console.log(value.key())
        result.push({ ...value.val() })
       database.ref("users").child(value.val().user).get().then((userResponse) => {
          user.push(userResponse.val())
@@ -175,7 +192,7 @@ async function postComment({ data,id }) {
 
 async function getLikedCounterPost({ id, func }) {
   await database.ref('like/' + id + '/count').on('value', (snapshot) => {
-    func(snapshot.val())
+    func(snapshot.val() ? snapshot.val() : 0)
   })
 }
 
@@ -187,7 +204,7 @@ async function getDetailLikedPost({ id }) {
 
 async function getCommentCounterPost({ id, func }) {
   await database.ref('posts/' + id + '/comment').on('value', (snapshot) => {
-    func(snapshot.val())
+    func(snapshot.val() ? snapshot.val() : 0)
   })
 }
 
@@ -205,7 +222,9 @@ async function getCountLikedPost(uid) {
   let result = 0
   const snapshot = await db.get()
   snapshot.forEach((child) => {
+    child.val().user ? 
     child.val().user[uid] ? result++ : ''
+ : ''
   })
   return result
 }
@@ -213,5 +232,5 @@ async function getCountLikedPost(uid) {
 export {
   getPostAll, getPostAllOnce, getUser, getUstad, getImage, getAllUstad, insertPost,
   insertImagePost, createUser, updateLikeContent, getCommentPost, postComment, getLikedCounterPost, getCommentCounterPost,
-  insertImageUser,getUserPhoto,getCountPost,getCountLikedPost,getDetailLikedPost
+  insertImageUser,getUserPhoto,getCountPost,getCountLikedPost,getDetailLikedPost,getAndCheckUserPhoto
 }

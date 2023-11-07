@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import QuizzHome from '../components/quiz/QuizzHome.vue'
-// import QuizzQuestion from '../components/quiz/QuizzQuestion.vue'
 import QuizzScore from '../components/quiz/QuizzScore.vue'
 import { kajianStore } from '@/stores/counter'
 

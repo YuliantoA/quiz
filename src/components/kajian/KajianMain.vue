@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full flex justify-center gap-x-3">
     <KajianUser></KajianUser>
-    <div class="flex flex-col w-4/12 h-full">
+    <div class="flex flex-col w-3/12 h-full">
       <FeedControl></FeedControl>
       <template v-if="isLoading">
         <KajianFeedSkeleton v-for="post in 3" :key="post" />
