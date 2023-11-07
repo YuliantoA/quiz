@@ -7,19 +7,34 @@
       />
     </div>
     <div
-      class="flex flex-col justify-evenly bg-kajian-lightBlue/20 p-3 rounded-tr-xl rounded-bl-xl w-5/6 shadow-md"
+      class="flex flex-col justify-evenly bg-kajian-lightBlue/20 p-3 rounded-tr-xl rounded-bl-xl w-5/6 shadow-md relative"
     >
       <div class="text-sm font-semibold">{{ detailComment.name }}</div>
       <div class="text-xs">{{ detailComment.comment }}</div>
+      <div class="absolute bottom-1 right-1 text-xs text-kajian-darkGray">{{ normalizeTime }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+import { reformatDate, reformatTime } from '@/helpers/DateHelper.js'
+
+const props = defineProps({
   detailComment: {
     type: Object,
     required: true
   }
+})
+
+const normalizeTime = computed(() => {
+  const today = new Date()
+  const commentTime = new Date(props.detailComment.created)
+  if (today.toDateString() === commentTime.toDateString()) {
+    return `${reformatTime(commentTime)}`
+  } else if ((today.getDate() - 1).toDateString() === commentTime.toDateString()) {
+    return 'yesterday'
+  }
+  return reformatDate(commentTime)
 })
 </script>

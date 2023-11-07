@@ -167,6 +167,7 @@ async function getCommentPost({data,func,emptyFunc}) {
            for (let i in result) {
              result[i]['name'] = user[i].name
            }
+           result = result.reverse()
            func(result)
          }
       })

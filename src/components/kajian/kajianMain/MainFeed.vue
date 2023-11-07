@@ -34,7 +34,10 @@
               }}</span>
             </div>
             <div class="w-6/12 flex justify-end items-center">
-              <div class="mr-2 cursor-pointer hover:text-kajian-darkBlue text-kajian-darkGray">
+              <div
+                @click="commentClick"
+                class="mr-2 cursor-pointer hover:text-kajian-darkBlue text-kajian-darkGray"
+              >
                 {{ `${commentCount} Comment` }}
               </div>
             </div>
@@ -84,7 +87,7 @@
           </div>
           <hr class="border-kajian-gray border w-full" />
           <div class="flex justify-around w-full items-center text-sm h-12">
-            <div class="w-1/3 text-center flex justify-center items-center">
+            <div class="w-1/2 text-center flex justify-center items-center">
               <div
                 v-if="!isLikeLoading"
                 @click="likeClick"
@@ -101,16 +104,16 @@
                 <div class="h-[1rem] rounded-lg bg-kajian-gray animate-pulse w-2/3"></div>
               </div>
             </div>
-            <div class="w-1/3 text-center flex justify-center items-center">
+            <div class="w-1/2 text-center flex justify-center items-center">
               <div @click="commentClick" class="cursor-pointer hover:text-kajian-darkBlue w-fit">
                 <font-awesome-icon :icon="['fas', 'comment']" /> <span>comment</span>
               </div>
             </div>
-            <div class="w-1/3 text-center flex justify-center items-center">
+            <!-- <div class="w-1/3 text-center flex justify-center items-center">
               <div class="cursor-pointer hover:text-kajian-darkBlue w-fit">
                 <font-awesome-icon :icon="['fas', 'share']" /> <span>share</span>
               </div>
-            </div>
+            </div> -->
           </div>
           <hr v-if="isComment" class="border-kajian-gray border w-full" />
           <div
