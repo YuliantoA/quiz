@@ -1,8 +1,8 @@
 <template>
   <div class="h-screen w-full bg-kajian-gray flex justify-center items-center font-roboto">
-    <div class="w-8/12 h-3/5 flex shadow-xl">
+    <div class="lg:w-8/12 w-full lg:h-3/5 h-full flex shadow-xl md:w-full">
       <div
-        class="w-6/12 h-full flex justify-center items-center border-r border-kajian-gray relative bg-gradient-to-b from-kajian-lightBlue to-kajian-blue"
+        class="lg:w-6/12 w-0 h-full flex justify-center items-center border-r border-kajian-gray relative bg-gradient-to-b from-kajian-lightBlue to-kajian-blue lg:visible invisible"
       >
         <div class="z-30 w-full h-full absolute">
           <KajianBeautify />
@@ -17,7 +17,7 @@
           <h1 class="text-5xl uppercase">welcome back</h1>
         </div>
       </div>
-      <div class="w-6/12 h-full bg-kajian-white">
+      <div class="lg:w-6/12 w-full h-full bg-kajian-white">
         <RouterView></RouterView>
       </div>
     </div>

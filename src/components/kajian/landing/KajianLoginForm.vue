@@ -1,6 +1,8 @@
 <template>
-  <h1 class="h-32 text-kajian-blue text-3xl font-bold">Login Account</h1>
-  <div class="h-14 w-10/12 relative mb-7">
+  <h1 class="h-32 text-kajian-blue lg:text-3xl text-4xl lg:mb-0 mb-[8rem] font-bold">
+    Login Account
+  </h1>
+  <div class="h-14 w-10/12 relative lg:mb-7 mb-[2rem]">
     <KajianTextInput
       :placeholder-text="'Email'"
       :type-input="'email'"

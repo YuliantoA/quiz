@@ -23,7 +23,7 @@
       <button
         :disabled="isLoading"
         @click="login"
-        class="w-10/12 py-3 rounded-full bg-gradient-to-br from-kajian-lightBlue to-kajian-darkBlue uppercase text-kajian-white tracking-widest hover:shadow-xl flex justify-center items-center"
+        class="w-10/12 lg:py-3 py-6 lg:text-lg text-2xl lg:font-normal font-bold rounded-full bg-gradient-to-br from-kajian-lightBlue to-kajian-darkBlue uppercase text-kajian-white tracking-widest hover:shadow-xl flex justify-center items-center"
       >
         <div v-if="isLoading" class="Toastify__spinner"></div>
         <span v-else> Login </span>
