@@ -8,13 +8,13 @@
           <KajianBeautify />
         </div>
         <div class="absolute top-10 left-10 z-50">
-          <h1 class="text-xl text-kajian-white">KajianKuy</h1>
+          <h1 class="xl:text-xl lg:text-lg text-kajian-white">KajianKuy</h1>
         </div>
         <div
           class="flex flex-col justify-center items-center w-full h-full space-y-2 z-10 text-kajian-white"
         >
-          <h4 class="text-xl font-thin">Nice to see you again</h4>
-          <h1 class="text-5xl uppercase">welcome back</h1>
+          <h4 class="xl:text-xl lg:text-lg font-thin">Nice to see you again</h4>
+          <h1 class="xl:text-5xl lg:text-4xl uppercase">welcome back</h1>
         </div>
       </div>
       <div class="lg:w-6/12 w-full h-full bg-kajian-white">

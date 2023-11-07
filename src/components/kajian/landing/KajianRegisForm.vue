@@ -1,5 +1,5 @@
 <template>
-  <h1 class="h-16 text-kajian-blue text-3xl font-bold">Create Account</h1>
+  <h1 class="h-16 text-kajian-blue lg:text-2xl text-3xl font-bold lg:my-1 my-20">Create Account</h1>
   <div class="h-14 w-10/12 relative mb-7">
     <KajianTextInput
       :placeholder-text="'Display Name'"

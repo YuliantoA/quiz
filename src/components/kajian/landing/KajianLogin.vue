@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center py-28 px-10">
+  <div class="w-full h-full flex flex-col items-center py-28 lg:px-10 px-2">
     <KajianLoginForm ref="form" @submit="login"></KajianLoginForm>
     <div class="w-full h-16 flex items-start justify-end px-10">
       <button

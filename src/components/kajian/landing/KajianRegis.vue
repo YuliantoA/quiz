@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full flex flex-col items-center pt-10 pb-16 px-10">
+  <div class="w-full h-full flex flex-col items-center pt-10 pb-16 lg:px-10 px-2">
     <KajianRegisFrom ref="form"></KajianRegisFrom>
     <div
       v-if="isErrorApi"
@@ -11,17 +11,17 @@
         messageError
       }}</span>
     </div>
-    <div class="w-full flex items-center justify-center h-5 mt-10">
+    <div class="w-full flex items-center justify-center h-5 mt-10 mb-10">
       <button
         :disabled="isLoading"
         @click="regis"
-        class="w-10/12 py-3 rounded-full bg-gradient-to-br from-kajian-lightBlue to-kajian-darkBlue uppercase text-kajian-white tracking-widest hover:shadow-xl flex items-center justify-center"
+        class="w-10/12 lg:py-3 py-5 lg:text-md text-xl lg:font-normal font-bold rounded-full bg-gradient-to-br from-kajian-lightBlue to-kajian-darkBlue uppercase text-kajian-white tracking-widest hover:shadow-xl flex items-center justify-center"
       >
         <div v-if="isLoading" class="Toastify__spinner"></div>
         <span v-else> Create Account </span>
       </button>
     </div>
-    <div class="w-full flex items-center justify-center px-10 pt-5 mt-auto">
+    <div class="w-full flex items-center justify-center px-10 pt-5 mt-auto lg:pb-0 pb-20">
       <button
         @click="toLogin()"
         class="text-kajian-blue hover:text-kajian-darkBlue font-bold text-sm"
