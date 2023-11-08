@@ -12,7 +12,7 @@
     </div>
     <div>
       <i>
-        <logoTextIcon :width="'100'"></logoTextIcon>
+        <logoTextIcon :width="isMobile(width) ? '100' : '200'"></logoTextIcon>
       </i>
     </div>
     <div class="flex justify-between items-center w-1/12">
@@ -44,12 +44,12 @@
 
 <script setup>
 import logoIcon from './logo/LogoIcon.vue'
-import { useWindowSize } from '@vueuse/core'
 import logoTextIcon from './logo/LogoTextIcon.vue'
 import IconBorder from './iconPersonal/IconBorder.vue'
 import router from '../../router'
 import { firebase } from '@/firebase/firebase.js'
 import { kajianStore } from '../../stores/counter'
+import { useWindowSize } from '@vueuse/core'
 import { isMobile } from '@/helpers/constantValue.js'
 
 const { width } = useWindowSize()
