@@ -6,6 +6,7 @@
       :type-input="'text'"
       :list-error="getErrorMessages(v$.name, 'Display Name')"
       v-model="state.name"
+      @keyup.enter="$emit('submit')"
     ></KajianTextInput>
   </div>
   <div class="h-14 w-10/12 relative mb-7">
@@ -14,6 +15,7 @@
       :type-input="'email'"
       :list-error="getErrorMessages(v$.email, 'Email')"
       v-model="state.email"
+      @keyup.enter="$emit('submit')"
     ></KajianTextInput>
   </div>
   <div class="h-14 w-10/12 relative mb-7">
@@ -23,6 +25,7 @@
       :list-error="getErrorMessages(v$.password, 'Password')"
       v-model="state.password"
       :need-eye="true"
+      @keyup.enter="$emit('submit')"
     ></KajianTextInput>
   </div>
   <div class="h-14 w-10/12 relative mb-7">
@@ -32,6 +35,7 @@
       :list-error="getErrorMessages(v$.rePassword, 'Password')"
       v-model="state.rePassword"
       :need-eye="true"
+      @keyup.enter="$emit('submit')"
     ></KajianTextInput>
   </div>
 </template>
@@ -42,6 +46,8 @@ import { useVuelidate } from '@vuelidate/core'
 import { required, email, sameAs } from '@vuelidate/validators'
 import { reactive, toRef, unref } from 'vue'
 import { getErrorMessages, letterAndNumberOnly } from '@/helpers/vuelidateHelper'
+
+defineEmits(['submit'])
 
 const state = reactive({
   email: '',

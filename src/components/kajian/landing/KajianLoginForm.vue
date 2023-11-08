@@ -8,6 +8,7 @@
       :type-input="'email'"
       :list-error="getErrorMessages(v$.email, 'Email')"
       v-model="state.email"
+      @keyup.enter="submit"
     ></KajianTextInput>
   </div>
   <div class="h-14 w-10/12 relative mb-7">

@@ -57,7 +57,6 @@ async function login() {
       .signInWithEmailAndPassword(data.formData.email, data.formData.password)
       .then((userCredential) => {
         userStore.login(userCredential.user)
-        console.log(userCredential)
         router.replace({ name: 'kajianMain' })
         isLoading.value = false
       })

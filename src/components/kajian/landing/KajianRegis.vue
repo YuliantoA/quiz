@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col items-center pt-10 pb-16 lg:px-10 px-2">
-    <KajianRegisFrom ref="form"></KajianRegisFrom>
+    <KajianRegisFrom ref="form" @submit="regis"></KajianRegisFrom>
     <div
       v-if="isErrorApi"
       class="flex justify-start items-center w-10/12 h-10 bg-kajian-red-transparent px-10"
@@ -21,7 +21,7 @@
         <span v-else> Create Account </span>
       </button>
     </div>
-    <div class="w-full flex items-center justify-center px-10 pt-5 mt-auto lg:pb-0 pb-20">
+    <div class="w-full flex items-start justify-center px-10 pt-5 lg:pt-0 mt-auto lg:mb-0 mb-20">
       <button
         @click="toLogin()"
         class="text-kajian-blue hover:text-kajian-darkBlue font-bold text-sm"
