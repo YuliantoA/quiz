@@ -15,7 +15,7 @@
           </div>
           <div v-if="props.postDetail.creatorFetch">{{ props.postDetail.creatorFetch?.name }}</div>
         </div>
-        <div class="h-[40rem] w-full mb-auto bg-black">
+        <div class="w-full mb-auto bg-black border-kajian-darkGray">
           <img :src="props.postDetail.image" class="object-contain h-full w-full" />
         </div>
         <div class="h-fit flex flex-col w-full items-center px-5 mt-2">
@@ -43,34 +43,34 @@
             </div>
           </div>
           <hr class="border-kajian-gray border w-full" />
-          <div class="w-full text-xs my-5 h-fit">
-            <div class="flex flex-wrap h-[5rem]">
-              <div class="w-2/4 font-light">
+          <div class="w-full lg:text-xs sm:text-lg text-xs my-5 h-fit">
+            <div class="flex flex-wrap lg:h-[5rem] h-[8rem]">
+              <div class="lg:w-2/4 w-full font-light">
                 <span class="">Judul : </span>
                 <span class="uppercase font-bold">{{ props.postDetail.judul }}</span>
               </div>
-              <div class="w-2/4 font-light">
+              <div class="lg:w-2/4 w-full font-light">
                 <span>Lokasi : </span>
                 <span class="capitalize">{{
                   `${props.postDetail.tempat.provinsi}, ${props.postDetail.tempat.kota}, ${props.postDetail.tempat.kecamatan}`
                 }}</span>
               </div>
-              <hr class="w-full border-none h-0" />
-              <div class="w-2/4 font-light">
+              <hr v-if="!isMobile(width)" class="w-full border-none h-0" />
+              <div class="lg:w-2/4 w-full font-light">
                 <span>Ustad : </span>
                 <span v-if="props.postDetail.ustadFetch" class="capitalize">{{
                   props.postDetail.ustadFetch?.name
                 }}</span>
               </div>
-              <div class="w-2/4 font-light">
+              <div class="lg:w-2/4 w-full font-light">
                 <span>Jadwal : </span>
-                <span class="capitalize text-xs">{{ `${date} ${time}` }}</span>
+                <span class="capitalize">{{ `${date} ${time}` }}</span>
               </div>
             </div>
             <div
               v-if="!isDetailOpen"
               @click="isDetailOpen = !isDetailOpen"
-              class="flex items-center justify-center w-full hover:text-kajian-darkBlue cursor-pointer capita"
+              class="flex items-center justify-center w-full hover:text-kajian-darkBlue cursor-pointer capitalize"
             >
               see more >>
             </div>
@@ -79,7 +79,7 @@
               <div v-html="props.postDetail.detail" class="my-5 h-fit"></div>
               <div
                 @click="isDetailOpen = !isDetailOpen"
-                class="flex items-center justify-center w-full hover:text-kajian-darkBlue cursor-pointer capita"
+                class="flex items-center justify-center w-full hover:text-kajian-darkBlue cursor-pointer capitalize"
               >
                 see less >>
               </div>
@@ -185,6 +185,10 @@ import {
   getAndCheckUserPhoto
 } from '@/firebase/kajianDataService.js'
 import { kajianStore, toastStore } from '@/stores/counter'
+import { useWindowSize } from '@vueuse/core'
+import { isMobile } from '@/helpers/constantValue.js'
+
+const { width } = useWindowSize()
 const props = defineProps({
   postDetail: {
     required: true,
@@ -231,9 +235,6 @@ onMounted(() => {
   getCommentCounter()
 })
 
-function test(value) {
-  alert(value)
-}
 async function likeClick() {
   detailLike.value = {}
   isLikeLoading.value = true
