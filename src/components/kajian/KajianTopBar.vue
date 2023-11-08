@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex lg:justify-between justify-around items-center bg-kajian-white h-20 lg:px-64 border border-kajian-darkGray"
+    class="flex lg:justify-between justify-around items-center bg-kajian-white lg:h-20 h-12 lg:px-64 border border-kajian-darkGray"
   >
     <div class="w-1/12">
       <i>
@@ -12,7 +12,7 @@
     </div>
     <div>
       <i>
-        <logoTextIcon></logoTextIcon>
+        <logoTextIcon :width="'100'"></logoTextIcon>
       </i>
     </div>
     <div class="flex justify-between items-center w-1/12">
