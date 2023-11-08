@@ -1,9 +1,16 @@
 <template>
-  <div class="w-full h-full flex justify-center gap-x-3">
+  <section class="w-full h-full flex justify-center gap-x-3 relative mt-7">
+    <aside
+      class="fixed top-0 left-0 border-kajian-gray h-screen transition-all ease-out duration-500 md:w-[15rem] sm:w-[10rem] z-50"
+      :class="[isSidebarShow ? 'translate-x-0' : '-translate-x-64 ']"
+      v-show="isMobile(width)"
+    >
+      <KajianUser @close="isSidebarShow = false" />
+    </aside>
     <KajianUser v-if="!isMobile(width)"></KajianUser>
     <div class="flex flex-col lg:w-3/12 w-10/12 h-full">
       <FeedControl></FeedControl>
-      <template v-if="isLoading">
+      <template v-if="true">
         <KajianFeedSkeleton v-for="post in 3" :key="post" />
       </template>
       <template v-else>
@@ -26,7 +33,7 @@
       </div>
     </div>
     <KajianRecommend v-if="!isMobile(width)"></KajianRecommend>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -54,6 +61,7 @@ const sortComponent = ref('')
 const sortAsc = ref('')
 const search = ref('')
 const isLoading = ref(true)
+const isSidebarShow = ref(false)
 watch(
   () => feedStore.sortComponent,
   (newValue) => {
@@ -79,6 +87,17 @@ watch(
   () => feedStore.search,
   (newValue) => {
     search.value = newValue
+  }
+)
+
+watch(
+  () => feedStore.showSideBar,
+  (newValue) => {
+    if (isMobile(width.value))
+      if (newValue) {
+        isSidebarShow.value = true
+        feedStore.showSideBar = false
+      }
   }
 )
 

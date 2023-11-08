@@ -1,5 +1,10 @@
 <template>
-  <div class="w-2/12 rounded-xl h-[20rem] bg-kajian-white flex flex-col items-center px-5 pt-10">
+  <div
+    class="lg:w-2/12 w-full rounded-xl lg:h-[20rem] h-full bg-kajian-white flex flex-col items-center px-5 pt-10 relative"
+  >
+    <div v-if="isMobile(width)" @click="$emit('close')" class="absolute top-2 right-2">
+      <img src="@/assets/kajian/cancel.png" />
+    </div>
     <input @change="onBrowse" ref="fileUpload" type="file" accept=".jpg,.jpeg,.png" hidden />
     <div class="w-full h-[8rem] flex justify-center items-center">
       <div
@@ -22,11 +27,11 @@
         </template>
       </div>
     </div>
-    <h5 class="font-bold text-lg py-2">
+    <h5 class="font-bold md:text-lg py-2">
       {{ userStore.displayName ? userStore.displayName : 'default' }}
     </h5>
     <hr class="bg-kajian-blue h-[.1rem] w-full" />
-    <div class="flex flex-col mt-5 w-full h-[10rem] space-y-4">
+    <div class="flex flex-col mt-5 w-full h-[10rem] space-y-4 md:text-lg text-xs">
       <div
         class="w-full flex space-x-3 items-center justify-center cursor-default hover:shadow-sm hover:text-kajian-red"
       >
@@ -53,7 +58,10 @@ import {
 } from '@/firebase/kajianDataService.js'
 import { kajianStore, toastStore, kajianFeedStore } from '@/stores/counter'
 import { compressImage } from '@/helpers/ImageHelper.js'
+import { useWindowSize } from '@vueuse/core'
+import { isMobile } from '@/helpers/constantValue.js'
 
+const { width } = useWindowSize()
 const controlFeedStore = kajianFeedStore()
 const fileUpload = ref()
 const userStore = kajianStore()
@@ -74,6 +82,8 @@ async function onBrowse(e) {
     promFunc: uploadImage(e)
   })
 }
+
+defineEmits(['close'])
 
 onMounted(() => {
   getPhoto()

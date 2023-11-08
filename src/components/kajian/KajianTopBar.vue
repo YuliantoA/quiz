@@ -3,7 +3,7 @@
     class="flex lg:justify-between justify-around items-center bg-kajian-white lg:h-20 h-12 lg:px-64 border border-kajian-darkGray"
   >
     <div class="w-1/12">
-      <i>
+      <i @click="controlFeedStore.showSideBar = true">
         <IconBorder v-if="isMobile(width)">
           <font-awesome-icon :icon="['fas', 'user']" />
         </IconBorder>
@@ -48,11 +48,12 @@ import logoTextIcon from './logo/LogoTextIcon.vue'
 import IconBorder from './iconPersonal/IconBorder.vue'
 import router from '../../router'
 import { firebase } from '@/firebase/firebase.js'
-import { kajianStore } from '../../stores/counter'
+import { kajianStore, kajianFeedStore } from '../../stores/counter'
 import { useWindowSize } from '@vueuse/core'
 import { isMobile } from '@/helpers/constantValue.js'
 
 const { width } = useWindowSize()
+const controlFeedStore = kajianFeedStore()
 const userStore = kajianStore()
 async function logout() {
   await firebase.auth().signOut()
