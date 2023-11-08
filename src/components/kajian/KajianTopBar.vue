@@ -16,30 +16,12 @@
       </i>
     </div>
     <div class="flex justify-between items-center w-1/12">
-      <!-- <IconBorder>
-        <font-awesome-icon :icon="['fas', 'house']" />
-      </IconBorder>
-      <IconBorder>
-        <font-awesome-icon :icon="['fas', 'heart']" />
-      </IconBorder> -->
       <VTooltip v-if="isMobile(width)">
-        <IconBorder>
+        <IconBorder @click="logout">
           <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" />
         </IconBorder>
 
-        <template #popper>
-          Logout
-          <!-- <div class="h-20 w-24 flex flex-col justify-center items-center">
-            
-            <div
-              @click="logout"
-              class="flex items-center justify-center w-8/12 h-10 py-2 px-10 border border-kajian-gray hover:bg-kajian-darkGray cursor-pointer"
-            >
-              <font-awesome-icon class="mr-3" :icon="['fas', 'right-from-bracket']" />
-              <button class="">logout</button>
-            </div>
-          </div> -->
-        </template>
+        <template #popper> Logout </template>
       </VTooltip>
       <VDropdown v-else>
         <IconBorder>
@@ -70,11 +52,6 @@ import { firebase } from '@/firebase/firebase.js'
 import { kajianStore } from '../../stores/counter'
 import { isMobile } from '@/helpers/constantValue.js'
 
-// const width = computed(() => {
-//   const isMobileView = isMobile
-//   return isMobileView
-// })
-// onMounted(isMobile())
 const { width } = useWindowSize()
 const userStore = kajianStore()
 async function logout() {
