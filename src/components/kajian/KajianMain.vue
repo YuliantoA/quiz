@@ -10,7 +10,7 @@
     <KajianUser v-if="!isMobile(width)"></KajianUser>
     <div class="flex flex-col lg:w-3/12 w-10/12 h-full">
       <FeedControl></FeedControl>
-      <template v-if="true">
+      <template v-if="isLoading">
         <KajianFeedSkeleton v-for="post in 3" :key="post" />
       </template>
       <template v-else>
