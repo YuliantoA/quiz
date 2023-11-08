@@ -109,11 +109,6 @@
                 <font-awesome-icon :icon="['fas', 'comment']" /> <span>comment</span>
               </div>
             </div>
-            <!-- <div class="w-1/3 text-center flex justify-center items-center">
-              <div class="cursor-pointer hover:text-kajian-darkBlue w-fit">
-                <font-awesome-icon :icon="['fas', 'share']" /> <span>share</span>
-              </div>
-            </div> -->
           </div>
           <hr v-if="isComment" class="border-kajian-gray border w-full" />
           <div
@@ -135,9 +130,10 @@
                 </div>
                 <div class="w-5/6 h-full">
                   <input
-                    v-model="commentInput"
                     type="text"
                     class="justify-evenly outline-kajian-darkGray outline p-3 rounded-lg w-full shadow-md h-5/6 text-sm"
+                    :value="commentInput"
+                    @input="(evt) => (commentInput = evt.target.value)"
                     @keyup.enter="sendComment"
                   />
                   <div
@@ -188,7 +184,7 @@ import {
   updateLikeContent,
   getAndCheckUserPhoto
 } from '@/firebase/kajianDataService.js'
-import { kajianStore } from '@/stores/counter'
+import { kajianStore, toastStore } from '@/stores/counter'
 const props = defineProps({
   postDetail: {
     required: true,
@@ -198,6 +194,7 @@ const props = defineProps({
     type: Number
   }
 })
+const store = toastStore()
 const userStore = kajianStore()
 const isCommentLoading = ref(true)
 const isDetailOpen = ref(false)
@@ -234,6 +231,9 @@ onMounted(() => {
   getCommentCounter()
 })
 
+function test(value) {
+  alert(value)
+}
 async function likeClick() {
   detailLike.value = {}
   isLikeLoading.value = true
@@ -274,13 +274,17 @@ async function commentClick() {
     : ''
 }
 async function sendComment() {
-  const data = {
-    comment: commentInput.value,
-    user: userStore.uid,
-    created: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString()
+  if (commentInput.value.length > 0) {
+    const data = {
+      comment: commentInput.value,
+      user: userStore.uid,
+      created: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString()
+    }
+    await postComment({ data, id: props.postDetail.postId })
+    commentInput.value = ''
+  } else {
+    store.toastOpen({ message: 'Comment must not empty', type: 'error' })
   }
-  await postComment({ data, id: props.postDetail.postId })
-  commentInput.value = ''
 }
 
 async function getLike() {

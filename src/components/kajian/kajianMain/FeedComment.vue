@@ -32,7 +32,11 @@ const normalizeTime = computed(() => {
   const commentTime = new Date(props.detailComment.created)
   if (today.toDateString() === commentTime.toDateString()) {
     return `${reformatTime(commentTime)}`
-  } else if ((today.getDate() - 1).toDateString() === commentTime.toDateString()) {
+  } else if (
+    today.getDate() - 1 === commentTime.getDate() &&
+    today.getMonth() === commentTime.getMonth() &&
+    today.getFullYear() === commentTime.getFullYear()
+  ) {
     return 'yesterday'
   }
   return reformatDate(commentTime)

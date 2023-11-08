@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full flex justify-center gap-x-3">
-    <KajianUser></KajianUser>
-    <div class="flex flex-col w-3/12 h-full">
+    <KajianUser v-if="!isMobile(width)"></KajianUser>
+    <div class="flex flex-col lg:w-3/12 w-10/12 h-full">
       <FeedControl></FeedControl>
       <template v-if="isLoading">
         <KajianFeedSkeleton v-for="post in 3" :key="post" />
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <KajianRecommend></KajianRecommend>
+    <KajianRecommend v-if="!isMobile(width)"></KajianRecommend>
   </div>
 </template>
 
@@ -40,10 +40,13 @@ import { computed, onMounted, ref } from 'vue'
 import { kajianFeedStore } from '../../stores/counter'
 import { watch } from 'vue'
 import { getUser, getUstad, getImage, getUserPhoto } from '@/firebase/kajianDataService.js'
+import { isMobile } from '@/helpers/constantValue.js'
+import { useWindowSize } from '@vueuse/core'
 
 onMounted(() => {
   getPost()
 })
+const { width } = useWindowSize()
 const feedStore = kajianFeedStore()
 const allPost = ref({})
 const showAllPost = ref(false)

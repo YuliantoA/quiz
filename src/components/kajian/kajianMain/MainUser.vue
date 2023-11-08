@@ -1,6 +1,6 @@
 <template>
-  <input @change="onBrowse" ref="fileUpload" type="file" accept=".jpg,.jpeg,.png" hidden />
   <div class="w-2/12 rounded-xl h-[20rem] bg-kajian-white flex flex-col items-center px-5 pt-10">
+    <input @change="onBrowse" ref="fileUpload" type="file" accept=".jpg,.jpeg,.png" hidden />
     <div class="w-full h-[8rem] flex justify-center items-center">
       <div
         @click="chooseFiles"
