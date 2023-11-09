@@ -24,18 +24,6 @@ import {
 
 import {registerSW} from "virtual:pwa-register"
 
-import FloatingVue from 'floating-vue'
-
-import 'floating-vue/dist/style.css'
-
-import CKEditor from '@ckeditor/ckeditor5-vue';
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
-import { firebase } from '@/firebase/firebase.js'
-import {  kajianStore } from '@/stores/counter'
-
-
-
 
 /* add icons to the library */
 library.add(faBookmark, faComment, fasComment, faArrowLeft, faUser, faHeart, faHouse, faHippo, faShieldDog, faShieldCat, faThumbsUp,
@@ -45,26 +33,8 @@ library.add(faBookmark, faComment, fasComment, faArrowLeft, faUser, faHeart, faH
 registerSW({immediate:true})
 const app = createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)
-app.component('VueDatePicker', VueDatePicker);
 app.use(createPinia())
-app.use(FloatingVue)
-app.use(CKEditor)
-let isRefreshed = false
-async function initDataFirebase() {
-    const userStore = kajianStore()
-     firebase.auth().onAuthStateChanged(async function (user) {
-        if (user) {
-            userStore.login(user)
-        } else {
-            userStore.logout()
-         }
-         if (!isRefreshed) {
-             app.use(router)
-             app.mount('#app')
-            isRefreshed = true
-         }
-  })
-}
+app.use(router)
+app.mount('#app')
 
 
-initDataFirebase()

@@ -48,40 +48,6 @@ export const toastStore = defineStore('toast', () => {
   }
   return {toastActive,toastOpen,toastMessage,toastType,resetToast,toastRemoveAll,toastFunc}
 })
-export const kajianStore = defineStore('user', () => {
-  const email = ref('')
-  const displayName = ref('')
-  const isLogin = ref(false)
-  const uid = ref('')
 
-  function getUid() {
-    return uid
-  }
-
- 
-  function login({email:userEmail, displayName:userName, uid:userID}) {
-    email.value = userEmail
-    displayName.value = userName
-    isLogin.value = true
-    uid.value = userID
-  }
-  function logout() {
-    email.value = ''
-    displayName.value = ''
-    isLogin.value = false
-    uid.value = ''
-  }
-  return {login,email,displayName,isLogin,uid,getUid,logout}
-})
-
-export const kajianFeedStore = defineStore('controlFeed', () => {
-  const sortComponent = ref()
-  const sortAsc = ref()
-  const search = ref()
-  const refetchPost = ref(false)
-  const showSideBar = ref(false)
-
-  return {sortComponent,sortAsc,search,refetchPost,showSideBar}
-})
 
 

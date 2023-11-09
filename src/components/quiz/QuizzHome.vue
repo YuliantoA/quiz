@@ -1,5 +1,4 @@
 <script setup>
-import LogoNavigation from '../LogoNavigation.vue'
 import logoIcon from '@/components/quiz/LogoIcon.vue'
 import router from '../../router'
 import { useWindowSize } from '@vueuse/core'
@@ -26,9 +25,9 @@ function startGame() {
 </script>
 
 <template>
-  <div class="absolute top-10 left-10">
+  <!-- <div class="absolute top-10 left-10">
     <LogoNavigation></LogoNavigation>
-  </div>
+  </div> -->
   <div class="flex items-start justify-center w-full h-1/2">
     <div class="p-12">
       <i>
