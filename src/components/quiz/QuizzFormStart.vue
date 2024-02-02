@@ -2,6 +2,7 @@
   <div class="flex flex-col w-full h-full justify-center items-center">
     <div class="w-full lg:h-1/4 h-1/3 flex justify-between items-start">
       <TextInput
+        id="name"
         key-name="Name"
         :list-error="getErrorMessages(v$.name, 'Name')"
         v-model="state.name"
@@ -10,6 +11,7 @@
     </div>
     <div class="w-full lg:h-1/4 h-1/3 flex justify-between items-start">
       <TextInput
+        id="totalQuestion"
         type-input="number"
         key-name="Total Question"
         :list-error="getErrorMessages(v$.totalQuestion, 'Total Question')"
@@ -20,6 +22,7 @@
     </div>
     <div class="w-full lg:h-1/4 h-1/3 flex justify-between items-start">
       <SelectInput
+        id="theme"
         key-name="Theme"
         :list-error="getErrorMessages(v$.theme, 'Theme Question')"
         :list-option="listTheme"
@@ -90,7 +93,6 @@ defineExpose({
   validateAndGetData
 })
 async function validateAndGetData() {
-  // const isFormCorrect = await unref(v$).$validate()
   unref(v$).$validate()
   return {
     valid: !v$.value.$invalid,
@@ -98,6 +100,5 @@ async function validateAndGetData() {
       ...state
     }
   }
-  // console.log(v$)
 }
 </script>
