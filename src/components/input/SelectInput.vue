@@ -11,7 +11,13 @@
         :class="[props.modelValue == '' ? 'text-gray-300' : 'text-black']"
       >
         <option disabled value="">Please select one</option>
-        <option v-for="{ id, value } in listOption" :key="id" :value="id" class="text-black">
+        <option
+          v-for="{ id, value } in listOption"
+          :key="id"
+          :value="id"
+          :id="id"
+          class="text-black"
+        >
           {{ normalizeString(value) }}
         </option>
       </select>
