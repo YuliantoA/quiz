@@ -88,14 +88,12 @@ export default {
       } else {
         instance.loading = true
         instance.$emit('loadingStarted')
-
         instance
           .apiMethod()
           .then((response) => {
             instance.loading = false
             instance.isError = false
             let errorMessage = ''
-
             if (!response.errors) {
               this.response = response
               instance.$emit('loadingEnded', {

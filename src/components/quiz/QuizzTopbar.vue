@@ -8,7 +8,7 @@
           size="sm"
         />
       </span>
-      <span class="md:ml-5 ml-3 text-lg md:text-2xl lg:text-4xl">{{
+      <span id="change-menu" class="md:ml-5 ml-3 text-lg md:text-2xl lg:text-4xl">{{
         activeQuestion == 0 ? 'Home' : 'Back'
       }}</span>
     </div>
@@ -23,30 +23,23 @@
 </template>
 
 <script setup>
-import { useQuizStore } from '@/stores/counter'
-import { ref, watch } from 'vue'
+import { useQuizStore } from '@/stores'
+import { computed } from 'vue'
 import router from '../../router'
+import { storeToRefs } from 'pinia'
 
 const store = useQuizStore()
+const { activeQuestion, question } = storeToRefs(store)
 
-let activeQuestion = ref(Number)
-let totalQuestion = ref('')
-let themeQuestion = ref('')
+let totalQuestion = question.value.length
+let themeQuestion = computed(() => {
+  return question.value[activeQuestion.value].category
+})
 
-watch(
-  () => store.activeQuestion,
-  () => {
-    if (activeQuestion.value != -1) {
-      activeQuestion.value = store.activeQuestion
-      totalQuestion.value = store.totalQuestion
-      themeQuestion.value = store.themeQuestion
-    }
-  }
-)
 function backClick() {
   if (activeQuestion.value > -2) {
     activeQuestion.value <= 0 ? router.replace({ name: 'home' }) : ''
-    store.activeQuestion--
+    activeQuestion.value--
   } else {
     router.replace({ name: 'home' })
   }
